@@ -1,0 +1,8 @@
+# Development/testing only. These are Cloudflare's published dummy keys.
+# Never copy these values into the production Worker environment.
+ENVIRONMENT=development
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
+IP_HASH_SALT=development-only-salt-change-me-32-characters
+ADMIN_API_TOKEN=development-only-admin-token-change-me

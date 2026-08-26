@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>奇迹 Harness — 为超长程任务而生的本地优先 Agent Harness</title>
+  <meta name="description" content="奇迹 Harness（Miracle Harness）是一款专注超长程任务的人机协作桌面端：蓝图定义施工方案，戒律约束施工规范，四季推动项目生长、收获与冬季熵减。" />
+  <meta name="theme-color" content="#34255f" />
+  <meta property="og:title" content="奇迹 Harness · v0.1.0 Alpha" />
+  <meta property="og:description" content="本地优先、可组合、可进化的长程 Agent Harness。下载 Windows x64 初代原型。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://miracleharness.com/" />
+  <meta property="og:image" content="https://miracleharness.com/assets/illustrations/hero-sanctuary-v1.png" />
+  <link rel="canonical" href="https://miracleharness.com/" />
+  <link rel="icon" type="image/png" href="assets/brand/miracle-bird-mark-v1.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+
+  <!-- ===== 顶栏 ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand-block" href="#top">
+        <span class="brand-mark"><img src="assets/brand/miracle-bird-mark-v1.png" alt="奇迹 Harness 金绿神鸟图腾" data-i18n-alt="alt.brand" /></span>
+        <span class="brand-name"><b data-i18n="brand.name">奇迹 Harness</b><small data-i18n="brand.sub">MIRACLE HARNESS</small></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="#features" data-i18n="nav.features">为什么</a>
+        <a href="#domains" data-i18n="nav.domains">领域</a>
+        <a href="#seasons" data-i18n="nav.seasons">四季</a>
+        <a href="#local" data-i18n="nav.local">本地优先</a>
+        <a href="#download" data-i18n="nav.download">下载</a>
+        <a href="#guestbook" data-i18n="nav.guestbook">留言</a>
+      </nav>
+      <div class="header-actions">
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-label="切换语言 / Switch language">EN</button>
+        <a class="btn btn-primary" href="#download" data-i18n="nav.cta">下载 Alpha</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow" data-i18n="hero.eyebrow">LONG-HORIZON AGENT HARNESS · 初代原型</span>
+          <h1 class="hero-title"><span data-i18n="hero.title1">奇迹</span><em data-i18n="hero.title2">Harness</em></h1>
+          <p class="hero-tag" data-i18n="hero.tag">为超长程任务而生的本地优先 Agent Harness</p>
+          <p class="hero-sub" data-i18n="hero.sub">蓝图是施工图纸与方案，戒律是施工规范；世界树管理对话，金字塔组织项目，根系吸收文件信息，四季让每个纪元在冬季主动熵减。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip" data-i18n="hero.cta1">下载 Windows 初代原型</a>
+            <a class="btn btn-ghost" href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta2">阅读完整构想 →</a>
+            <a class="btn btn-ghost" href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta3">查看 GitHub 源码 →</a>
+          </div>
+          <div class="hero-badges">
+            <span class="chip chip-alpha" data-i18n="hero.badge1">v0.1.0-alpha.1 · Alpha</span>
+            <span class="chip" data-i18n="hero.badge2">Windows x64 · 便携版</span>
+            <span class="chip" data-i18n="hero.badge3">蓝图 + Agent 会议</span>
+            <span class="chip chip-green" data-i18n="hero.badge4">会话与项目状态本地保存</span>
+          </div>
+          <p class="alpha-note" data-i18n="hero.alpha">Alpha 会持续进化，适合体验、研究与共同设计，请先用于可恢复的非关键项目。</p>
+        </div>
+        <div class="hero-visual">
+          <img src="assets/illustrations/hero-sanctuary-v1.png" alt="奇迹 Harness 圣所俯瞰图" data-i18n-alt="alt.hero" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 为什么 ===== -->
+    <section class="section" id="features">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="features.eyebrow">WHY MIRACLE HARNESS</span>
+        <h2 data-i18n="features.title">它不是又一块画布，而是项目的全景驾驶舱</h2>
+        <p class="section-lead" data-i18n="features.lead">长程项目最大的敌人是「失忆」与「失序」。奇迹 Harness 让人类与 Agent 始终共享同一张项目地图，无论换对话、换模型还是换工具。</p>
+      </div>
+      <div class="cards features-grid">
+        <article class="card feature-card">
+          <h3 data-i18n="feat1.title">俯瞰全局</h3>
+          <p data-i18n="feat1.desc">项目目标、施工层级、季节轮回与唯一任务一屏尽览，不再迷失在碎片对话里。</p>
+        </article>
+        <article class="card feature-card">
+          <h3 data-i18n="feat2.title">治理文件</h3>
+          <p data-i18n="feat2.desc">以「砖块」组织代码与文档，记录职责、依赖与决策证据，让每个模块都有自己的上下文。</p>
+        </article>
+        <article class="card feature-card">
+          <h3 data-i18n="feat3.title">编排提示词</h3>
+          <p data-i18n="feat3.desc">写入收件箱的指令，由 Agent 在任意对话中读取执行；上下文胶囊随时打包交接。</p>
+        </article>
+        <article class="card feature-card">
+          <h3 data-i18n="feat4.title">控制进程</h3>
+          <p data-i18n="feat4.desc">四层质量门 + 伊甸园人工验收：果实只有通过验收才被接受，返工、延期与堆肥都有去处。</p>
+        </article>
+        <article class="card feature-card">
+          <h3 data-i18n="feat5.title">主动压缩上下文</h3>
+          <p data-i18n="feat5.desc">切对话、换模型、换工具时，自动把关键状态压进胶囊，新 Agent 读完即续上。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 领域 ===== -->
+    <section class="section section-alt" id="domains">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="domains.eyebrow">COMPOSABLE SANDBOX</span>
+        <h2 data-i18n="domains.title">初代先点亮塔尖，再逐层扩建整座奇迹</h2>
+        <p class="section-lead" data-i18n="domains.lead">v0.1 Alpha 先打通中控台、蓝图、世界树、金字塔、根系与 Agent 会议；其余圣殿是可独立组装、升级与放大搜索的长期地图。</p>
+      </div>
+      <div class="cards domains-grid">
+
+        <article class="card domain-card domain-card-s0">
+          <span class="domain-tag">S0 · SHELL</span>
+          <h3 data-i18n="d0.title">中控台</h3>
+          <p data-i18n="d0.desc">项目全景、导航、状态投影与领域快捷入口，一切的起点。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/human-planner-v1.png" alt="蓝图规划台" data-i18n-alt="alt.d1" />
+          <h3 data-i18n="d1.title">蓝图规划台</h3>
+          <p data-i18n="d1.desc">项目目标、分层计划、施工顺序、验收清单和任务签收。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/yggdrasil-task-tree-v1.png" alt="世界树" data-i18n-alt="alt.d2" />
+          <h3 data-i18n="d2.title">世界树</h3>
+          <p data-i18n="d2.desc">对话主干、会话分支、指令调用，以及计划、果实与胶囊引用。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/agent-registry-council-v1.png" alt="天使议会" data-i18n-alt="alt.d3" />
+          <h3 data-i18n="d3.title">天使议会</h3>
+          <p data-i18n="d3.desc">Agent 身份、能力、任务分配与交接入口。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/tool-registry-gateway-v1.png" alt="众神武库" data-i18n-alt="alt.d4" />
+          <h3 data-i18n="d4.title">众神武库</h3>
+          <p data-i18n="d4.desc">外接工具、能力契约和统一调用边界。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/harvest-orchard-v1.png" alt="伊甸园" data-i18n-alt="alt.d5" />
+          <h3 data-i18n="d5.title">伊甸园</h3>
+          <p data-i18n="d5.desc">当前实现、验证证据与人工接受或退回决定。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/wisdom-well-v1.png" alt="智慧之泉" data-i18n-alt="alt.d6" />
+          <h3 data-i18n="d6.title">智慧之泉</h3>
+          <p data-i18n="d6.desc">外部论文、代码、数据和能力的项目入口。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/covenant-rules-sanctuary-v1.png" alt="戒律石板" data-i18n-alt="alt.d7" />
+          <h3 data-i18n="d7.title">戒律石板</h3>
+          <p data-i18n="d7.desc">五类原子戒律、Agent 角色包、绑定校验和 Effective Policy 编译。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/athena-learning-academy-v1.png" alt="雅典娜学宫" data-i18n-alt="alt.d8" />
+          <h3 data-i18n="d8.title">雅典娜学宫</h3>
+          <p data-i18n="d8.desc">工作现场产生的人类学习知识库入口。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/egypt-project-pyramid-v2.png" alt="项目金字塔" data-i18n-alt="alt.d9" />
+          <h3 data-i18n="d9.title">项目金字塔</h3>
+          <p data-i18n="d9.desc">LOD、季节和项目街区，把长程项目切成可治理的层。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/git-roots-v1.png" alt="项目根系" data-i18n-alt="alt.d10" />
+          <h3 data-i18n="d10.title">项目根系</h3>
+          <p data-i18n="d10.desc">文件浏览与砖块上下文：让每个文件都有自己的来龙去脉。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/renaissance-alchemy-experiment-lab-v1.png" alt="实验神殿" data-i18n-alt="alt.d11" />
+          <h3 data-i18n="d11.title">实验神殿</h3>
+          <p data-i18n="d11.desc">实验账本与配置指纹，每次实验都可复现、可回溯。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/run-observatory-trace-explorer-v1.png" alt="观星台" data-i18n-alt="alt.d12" />
+          <h3 data-i18n="d12.title">观星台</h3>
+          <p data-i18n="d12.desc">Agent 运行、事件轨迹、异常和验证证据回溯。</p>
+        </article>
+
+        <article class="card domain-card">
+          <img src="assets/illustrations/seasons-cycle-sanctuary-v1.png" alt="上下文胶囊" data-i18n-alt="alt.d13" />
+          <h3 data-i18n="d13.title">上下文胶囊</h3>
+          <p data-i18n="d13.desc">主动压缩和模型接力：状态可以跨对话、跨模型地续上。</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== 四季 ===== -->
+    <section class="section" id="seasons">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="seasons.eyebrow">SEASONS CYCLE</span>
+        <h2 data-i18n="seasons.title">让项目像四季一样轮回</h2>
+        <p class="section-lead" data-i18n="seasons.lead">每轮施工都走完播种、生长、收获、维护四个季节，节奏清晰，结果可验。</p>
+      </div>
+      <div class="seasons">
+        <article class="season season-spring">
+          <span class="season-num" data-i18n="seasons.s1.num">S1</span>
+          <h3 data-i18n="seasons.s1.title">春季 · 播种</h3>
+          <p data-i18n="seasons.s1.desc">人类冻结本轮目标、道路、施工层级、唯一任务和验收条件。</p>
+        </article>
+        <article class="season season-summer">
+          <span class="season-num" data-i18n="seasons.s2.num">S2</span>
+          <h3 data-i18n="seasons.s2.title">夏季 · 生长</h3>
+          <p data-i18n="seasons.s2.desc">Agent 沿已批准道路直接施工、验证并接入当前项目。</p>
+        </article>
+        <article class="season season-autumn">
+          <span class="season-num" data-i18n="seasons.s3.num">S3</span>
+          <h3 data-i18n="seasons.s3.title">秋季 · 收获</h3>
+          <p data-i18n="seasons.s3.desc">候选果实进入伊甸园，通过质量门后由人类决定接受、返工、延期或堆肥。</p>
+        </article>
+        <article class="season season-winter">
+          <span class="season-num" data-i18n="seasons.s4.num">S4</span>
+          <h3 data-i18n="seasons.s4.title">冬季 · 维护</h3>
+          <p data-i18n="seasons.s4.desc">总结信息、更新接力胶囊、清理技术债务，决定下一轮是否分裂砖块或换壳。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 状态与架构 ===== -->
+    <section class="section section-ink">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="status.eyebrow">CURRENT STATUS</span>
+        <h2 data-i18n="status.title">初代原型 · 从春季走向夏季</h2>
+      </div>
+      <div class="status-stack">
+        <div class="status-item"><span class="status-key" data-i18n="status.v">版本</span><span class="status-val">v0.1.0-alpha.1 · Windows x64</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.lod">当前纪元</span><span class="status-val" data-i18n="status.lodv">春季建 Mission · B0 批准后进入夏季</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.shell">已点亮</span><span class="status-val" data-i18n="status.shellv">中控台 + 蓝图 + 世界树 + 金字塔 + 根系 + Agent 会议</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.quality">当前边界</span><span class="status-val" data-i18n="status.qualityv">文本模型 API 对话；暂不开放工具调用与自动改写文件</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.tech">技术栈</span><span class="status-val">Electron 43 · TypeScript · Vite · SQLite · Local Engine</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.path">下一步</span><span class="status-val" data-i18n="status.pathv">让戒律、秋收、冬季代谢和上下文胶囊成为可验证闭环</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 本地优先与安全 ===== -->
+    <section class="section" id="local">
+      <div class="split">
+        <div class="split-copy">
+          <span class="eyebrow" data-i18n="local.eyebrow">LOCAL-FIRST BY DESIGN</span>
+          <h2 data-i18n="local.title">项目记忆留在本机，外部模型只接收你发出的上下文</h2>
+          <ul class="local-list">
+            <li data-i18n="local.l1">Mission、蓝图、会话索引与界面状态保存在你的 Windows 设备。</li>
+            <li data-i18n="local.l2">模型 API Key 使用系统安全存储，不写入会话数据库与导出记录。</li>
+            <li data-i18n="local.l3">初代仅开放文本对话，不自动移动、覆盖、删除或 Git 提交项目文件。</li>
+            <li data-i18n="local.l4">蓝图 B0 必须由人类批准，未获批准的道路不会伪装成已施工。</li>
+            <li data-i18n="local.l5">项目文件、运行证据与 Git 历史始终是最终事实来源。</li>
+          </ul>
+        </div>
+        <div class="split-visual">
+          <img src="assets/illustrations/git-roots-v1.png" alt="项目根系与 Git 历史" data-i18n-alt="alt.local" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 下载 ===== -->
+    <section class="section section-alt" id="download">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="start.eyebrow">DOWNLOAD THE FIRST SEED</span>
+        <h2 data-i18n="start.title">下载 Windows 初代原型，从一个真实 Mission 开始</h2>
+        <p class="section-lead" data-i18n="start.lead">这是 v0.1.0-alpha.1 便携体验版，目标是验证「建 Mission → 批准 B0 → 接入模型 → 保持长程上下文」这条最小道路。</p>
+      </div>
+      <div class="download-panel">
+        <div class="download-main">
+          <span class="release-kicker">MIRACLE HARNESS · ALPHA 1</span>
+          <h3 data-i18n="download.title">Windows x64 便携版</h3>
+          <p data-i18n="download.desc">下载 ZIP 后解压到普通文件夹，先阅读压缩包内说明再启动。Alpha 不提供自动更新与代码签名。</p>
+          <div class="download-actions">
+            <a class="btn btn-primary btn-large" href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip" data-i18n="download.cta">下载 v0.1.0-alpha.1</a>
+            <a class="btn btn-ghost" href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer" data-i18n="download.source">GitHub 源码与发行说明</a>
+          </div>
+          <p class="download-meta" data-i18n="download.meta">平台：Windows 10/11 · 架构：x64 · 渠道：Alpha · 数据：默认本地</p>
+        </div>
+        <ol class="start-steps">
+          <li data-i18n="step1">解压到你有写入权限的普通文件夹，按包内 README 启动应用。</li>
+          <li data-i18n="step2">选择一个项目工作区，创建 Mission；此时纪元处于春季。</li>
+          <li data-i18n="step3">在蓝图中确认目标并人工批准 B0，道路进入夏季施工。</li>
+          <li data-i18n="step4">在 Agent 会议中保存兼容 OpenAI 的接口、模型与 API Key，然后开始对话。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 留言板 ===== -->
+    <section class="section guestbook-section" id="guestbook">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="guestbook.eyebrow">LEAVE A SEED</span>
+        <h2 data-i18n="guestbook.title">给奇迹留下一颗种子</h2>
+        <p class="section-lead" data-i18n="guestbook.lead">告诉我你想用它完成怎样的长程任务，或哪一条戒律最值得先做。留言经 Cloudflare Turnstile 验证，并限制每个来源每小时最多 3 条。</p>
+      </div>
+      <div class="guestbook-layout">
+        <form class="guestbook-form" id="guestbook-form" novalidate>
+          <div class="form-field">
+            <label for="guestbook-name" data-i18n="guestbook.name">你的称呼</label>
+            <input id="guestbook-name" name="displayName" type="text" minlength="1" maxlength="32" autocomplete="name" required placeholder="例如：一位长期项目的建造者" data-i18n-placeholder="guestbook.namePlaceholder" />
+          </div>
+          <div class="form-field">
+            <div class="field-label-row">
+              <label for="guestbook-message" data-i18n="guestbook.message">留言</label>
+              <span id="guestbook-count">0 / 500</span>
+            </div>
+            <textarea id="guestbook-message" name="message" minlength="1" maxlength="500" rows="6" required placeholder="写下建议、场景或你希望一起验证的道路……" data-i18n-placeholder="guestbook.messagePlaceholder"></textarea>
+          </div>
+          <div id="turnstile-container" class="turnstile-container" aria-label="Cloudflare Turnstile"></div>
+          <button class="btn btn-primary guestbook-submit" id="guestbook-submit" type="submit" disabled data-i18n="guestbook.submit">提交留言</button>
+          <p class="form-status" id="guestbook-status" role="status" aria-live="polite" data-i18n="guestbook.loading">正在连接留言板……</p>
+          <p class="privacy-note" data-i18n="guestbook.privacy">隐私：不保存原始 IP；仅使用带盐 SHA-256 哈希完成一小时限频，旧限频记录会自动清理。</p>
+        </form>
+        <div class="guestbook-feed" aria-live="polite">
+          <div class="guestbook-feed-head">
+            <h3 data-i18n="guestbook.feedTitle">最近的种子</h3>
+            <button class="refresh-button" id="guestbook-refresh" type="button" data-i18n="guestbook.refresh">刷新</button>
+          </div>
+          <div class="message-list" id="guestbook-list">
+            <p class="empty-state" data-i18n="guestbook.feedLoading">正在读取留言……</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark small"><img src="assets/brand/miracle-bird-mark-v1.png" alt="奇迹 Harness 金绿神鸟图腾" data-i18n-alt="alt.brand" /></span>
+        <b data-i18n="brand.name">奇迹 Harness</b>
+        <p data-i18n="footer.tagline">本地优先 · 模型无关 · 长程项目伴生</p>
+      </div>
+      <div class="footer-links">
+        <a href="#features" data-i18n="nav.features">为什么</a>
+        <a href="#domains" data-i18n="nav.domains">领域</a>
+        <a href="#seasons" data-i18n="nav.seasons">四季</a>
+        <a href="#download" data-i18n="nav.download">下载</a>
+        <a href="#guestbook" data-i18n="nav.guestbook">留言</a>
+        <a href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <div class="footer-contact">
+        <b class="contact-heading" data-i18n="footer.contact">联系我</b>
+        <div class="contact-row">
+          <span class="contact-item">
+            <span class="contact-k" data-i18n="footer.email">邮箱</span>
+            <a class="contact-v" href="mailto:3129746403@qq.com">3129746403@qq.com</a>
+          </span>
+          <span class="contact-item">
+            <span class="contact-k" data-i18n="footer.wechat">微信</span>
+            <span class="contact-v">APOLLOSTART</span>
+          </span>
+        </div>
+      </div>
+      <p class="footer-copy">© 2026 Miracle Harness · miracleharness.com</p>
+    </div>
+  </footer>
+
+</body>
+</html>
