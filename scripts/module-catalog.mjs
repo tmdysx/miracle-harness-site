@@ -27,6 +27,36 @@ export const moduleCatalog = [
     subtitle: "Mission, Blueprint & Work",
     lede: "把一个长期使命变成可批准、可施工、可验收的蓝图树，并始终给出唯一、可解释的下一步。",
     illustration: "assets/illustrations/human-planner-v1.png",
+    terminology: [
+      {
+        term: "Mission（使命）",
+        definition: "跨越多次 Session、模型切换和文件变化仍然有效的长期工作单元，保存最终成果、范围、边界、验收与停止条件。",
+      },
+      {
+        term: "Blueprint（蓝图）",
+        definition: "版本化的施工方案；B0 是总蓝图，B1/B2+ 在父层边界内逐层细化，不能用一次对话里的 Plan 代替。",
+      },
+      {
+        term: "WorkItem（工作项）",
+        definition: "由蓝图分解出的可跟踪工作；只有目标、范围、依赖、验收和停止条件完整的叶节点才可进入执行。",
+      },
+      {
+        term: "Decision Ledger（决定账本）",
+        definition: "记录关键选择、被放弃方案、依据和影响范围的长期账本，让后续 Agent 不必重新猜测旧决定。",
+      },
+      {
+        term: "Execution Envelope（执行信封）",
+        definition: "一次 Run 的不可变开工确认单，绑定准确任务、蓝图、戒律、上下文、工具、预算、权限和停止条件。",
+      },
+      {
+        term: "Next Action（唯一下一步）",
+        definition: "由 Kernel 根据权威快照计算并附带理由、阻塞与对象引用的一个推荐动作，不由页面或模型自行猜测。",
+      },
+    ],
+    designPrinciples: [
+      "蓝图规划台把长期工程的治理状态放在聊天之上：Session 可以结束，Mission、决定和验收边界不能随之消失。它先冻结塔尖，再允许子蓝图和叶任务在已批准边界内生长。",
+      "模块只拥有施工意图与任务状态，不直接运行 Agent，也不替戒律授权或替伊甸园验收。Goal、Plan、Todo 只是 Engine 内单次执行的镜像和草稿，不能反向覆盖 Kernel 中的长期事实。",
+    ],
     responsibility: [
       "拥有 Mission、Blueprint、WorkItem、Decision 的权威状态与版本关系。",
       "坚持先 B0 总蓝图、再 B1/B2 局部蓝图；只有边界完整的叶任务才进入执行。",
@@ -87,6 +117,36 @@ export const moduleCatalog = [
     subtitle: "Policy, Authorization & Guardrails",
     lede: "在行动发生之前回答“能不能做、做到哪里、何时必须停”，把红线、例外和人类批准变成可审计的施工规范。",
     illustration: "assets/illustrations/covenant-rules-sanctuary-v1.png",
+    terminology: [
+      {
+        term: "Constitution（宪章）",
+        definition: "Mission 不可被下层规则放宽的顶层红线，例如人类最终批准权、证据不可覆盖和唯一恢复点不可删除。",
+      },
+      {
+        term: "RuleVersion（戒律版本）",
+        definition: "带内容、修订号、哈希、批准者和生效区间的不可变规则版本；冬季提案必须到下一春季批准后才成为权威。",
+      },
+      {
+        term: "PolicyScope（政策作用域）",
+        definition: "规则适用的 Project、Agent、Tool、Path、Network 或 Run 范围；下层可以收窄权限，但不能越过上层红线。",
+      },
+      {
+        term: "PreflightDecision（执行前决定）",
+        definition: "执行信封启动或高风险调用发生前给出的 allow、deny 或 require-approval 结论，并解释命中了哪些规则。",
+      },
+      {
+        term: "ApprovalGrant（批准凭据）",
+        definition: "人类针对准确版本、范围和期限作出的授权证据，不是一句脱离对象与时间的口头同意。",
+      },
+      {
+        term: "ExceptionGrant（例外授权）",
+        definition: "对特定规则的临时、最小范围例外，必须记录申请原因、批准者、失效条件和审计事件。",
+      },
+    ],
+    designPrinciples: [
+      "戒律是施工规范而不是成果评分表，所以它在行动之前工作：先解析有效规则包，再决定允许、拒绝或请求人类批准。成果是否合格要留给伊甸园在行动后判断。",
+      "规则采用版本化、分层作用域和默认最小权限设计。Agent 可以提出修订或例外，但不能批准适用于自己的规则；真正的沙盒执行由 Engine 落实，戒律负责提供可解释、可审计的治理决定。",
+    ],
     responsibility: [
       "管理顶层宪章、项目规则、Agent 有效规则包与工具/路径/网络政策。",
       "解析作用域、版本与冲突，在执行信封启动前给出允许、拒绝或需批准的决定。",
@@ -147,6 +207,36 @@ export const moduleCatalog = [
     subtitle: "Epoch, Context & Recovery Lifecycle",
     lede: "把四季、上下文预算、压缩、代谢与恢复组织成一个有来源的纪元循环，让项目变长时仍然可继续。",
     illustration: "assets/illustrations/seasons-cycle-sanctuary-v1.png",
+    terminology: [
+      {
+        term: "ProjectEpoch（项目纪元）",
+        definition: "Kernel 管理的 Mission 级春夏秋冬生命周期；它与 Blueprint、WorkItem 和 Run 状态正交，不复制它们的状态机。",
+      },
+      {
+        term: "Working Set（活动工作集）",
+        definition: "当前叶任务正在使用的规则、决定、文件、知识和历史引用，是全部项目记忆中最小的活跃部分。",
+      },
+      {
+        term: "Context Manifest（上下文清单）",
+        definition: "发送给模型前可见、可裁剪的对象清单，记录稳定引用、版本、来源、优先级、token 估算以及被省略内容。",
+      },
+      {
+        term: "Micro-compaction（微压缩）",
+        definition: "夏季在单次 Run 的 token 压力下进行的可追溯压缩；摘要必须能返回原消息、文件、决定或工具结果。",
+      },
+      {
+        term: "Metabolism Report（代谢报告）",
+        definition: "冬季对重复、过期、孤立内容和技术债的分析，以及归档、修订或淘汰建议，不等同于自动删除。",
+      },
+      {
+        term: "Capsule / Handoff（胶囊与交接）",
+        definition: "带稳定来源和恢复清单的有界工作记忆，使新 Session、不同模型或重启后的系统能从准确状态继续。",
+      },
+    ],
+    designPrinciples: [
+      "时光胶囊的核心不是缩短文字，而是控制长期项目的活动熵：夏季只做可追溯微压缩，冬季才跨 Session 去重、归档、清债和提出下一纪元候选。原始证据可以转入冷层，但不能失去返回路径。",
+      "四季属于 Kernel 的权威生命周期，模块负责上下文与恢复投影，不私自批准新蓝图或戒律。任何冬季候选都必须经过下一春季的人类版本批准，才可以成为新的执行基线。",
+    ],
     responsibility: [
       "管理 ProjectEpoch、春夏秋冬转换、季节快照与当前 Working Set。",
       "建立带稳定引用、来源、版本和优先级的 Context Manifest，并管理 token 预算。",
@@ -207,6 +297,36 @@ export const moduleCatalog = [
     subtitle: "Artifact Review & Acceptance",
     lede: "让 Agent 留下的果实接受证据、Diff 和人类评审，而不是凭一句“已完成”进入项目历史。",
     illustration: "assets/illustrations/harvest-orchard-v1.png",
+    terminology: [
+      {
+        term: "Artifact / Fruit（成果 / 果实）",
+        definition: "Agent 实际留下、具有准确版本和来源的可检查结果；生成了文件不代表它已经被项目接受。",
+      },
+      {
+        term: "EvidenceRef（证据引用）",
+        definition: "指向测试、截图、Diff、日志、指标或人工观察的稳定引用，使验收结论能够回到原始证据。",
+      },
+      {
+        term: "Evidence Bundle（证据包）",
+        definition: "围绕一个准确 Artifact 版本聚合完成定义、复现步骤、测试结果、已知限制与来源的验收材料。",
+      },
+      {
+        term: "Quality Gate（质量门）",
+        definition: "从文件、模块、集成到项目逐层设置的可检查条件；低层通过不会自动证明高层完成。",
+      },
+      {
+        term: "Review / Verdict（评审 / 结论）",
+        definition: "人类或受信验证器对证据作出的接受、退回或补证据决定，COMMAND 据此关闭或重开 WorkItem。",
+      },
+      {
+        term: "RollbackRef（回滚引用）",
+        definition: "连接已接受成果与可验证文件或 Git 检查点的恢复锚点，确保集成以后仍可撤回。",
+      },
+    ],
+    designPrinciples: [
+      "伊甸园坚持“声明不等于完成”：Agent 最多提交候选成果和证据，只有准确版本通过预先冻结的质量门并产生 Verdict，任务才有资格被规划台关闭。",
+      "它与戒律构成前后两道不同的门。戒律回答行动能否开始，伊甸园回答行动留下的结果能否接受；验收结论只引用证据，不改写测试、Diff、日志等原始事实。",
+    ],
     responsibility: [
       "接收 Artifact，聚合测试、截图、Diff、日志、指标和来源为 Evidence Bundle。",
       "按文件级、模块级、集成级和项目级质量门执行行动后复核。",
@@ -267,6 +387,36 @@ export const moduleCatalog = [
     subtitle: "Conversation & Execution Graph",
     lede: "把对话、分支 Session、Subagent、运行、输入与成果连接成可搜索的谱系，让长程项目看得见自己从哪里长出来。",
     illustration: "assets/illustrations/yggdrasil-task-tree-v1.png",
+    terminology: [
+      {
+        term: "Session（会话）",
+        definition: "Engine 中一段可持久化、可重放的 Agent 交互记录；一个 Mission 可以有多个 Session，但不能依赖其中一个聊天历史充当全部记忆。",
+      },
+      {
+        term: "RunBinding（运行绑定）",
+        definition: "把 Session/Run 与准确 Mission、WorkItem 和 Execution Envelope 连接起来的稳定关系。",
+      },
+      {
+        term: "RelationEdge（关系边）",
+        definition: "记录对话、任务、Agent、输入文件、工具、成果与证据之间关系及其来源事件的领域事实。",
+      },
+      {
+        term: "LineageNode（谱系节点）",
+        definition: "世界树中的可寻址对象投影，可代表主线程、分支、Subagent、Run 或成果，并保留稳定 ID。",
+      },
+      {
+        term: "Fork / Subagent Lineage（分支谱系）",
+        definition: "记录子会话从哪里分出、为哪个任务服务、如何汇报和回到主线的关系，而不是另开无边界主任务。",
+      },
+      {
+        term: "Conversation Projection（会话投影）",
+        definition: "由 append-only Session 事件确定性生成的可搜索、可折叠视图；界面布局本身不是权威历史。",
+      },
+    ],
+    designPrinciples: [
+      "世界树把长程工作的情节记忆做成关系图，但不抢夺原始事实：消息和运行事件仍在 Engine Session log，任务状态仍在 COMMAND，世界树只拥有可追溯的 RelationEdge 与谱系投影。",
+      "关系采用稳定 ID 和来源事件，而不是标题、路径或画布坐标。这样用户可以把复杂枝叶折叠、缩放或重新布局，同时仍能从成果回到产生它的对话、任务、文件和证据。",
+    ],
     responsibility: [
       "投影当前 Mission 的主对话、分支 Session、fork 来源与 Subagent 汇报关系。",
       "建立 Conversation、WorkItem、Run、ExecutionEnvelope、文件、成果和证据之间的稳定 RelationEdge。",
@@ -327,6 +477,36 @@ export const moduleCatalog = [
     subtitle: "Semantic Project Topology",
     lede: "用 S、B/T 与 LOD 三条坐标轴组织项目语义，从塔尖总使命缩放到小蓝图、任务、文件和证据。",
     illustration: "assets/illustrations/egypt-project-pyramid-v2.png",
+    terminology: [
+      {
+        term: "S Axis（系统所有权层级）",
+        definition: "S0 中控台、S1 领域、S2 工作面与 S3+ 具体能力的系统结构，回答“这项事实或能力属于哪里”。",
+      },
+      {
+        term: "B/T Axis（施工分解层级）",
+        definition: "B0→B∞ 蓝图与 T0→T∞ WorkItem 的两棵施工树，回答“计划和工作被分到了哪一层”。",
+      },
+      {
+        term: "LOD（显示分辨率）",
+        definition: "同一事实从全景摘要、节点卡片到原始证据的展示密度；缩放不会改变对象的版本、权限或状态。",
+      },
+      {
+        term: "Stable UID（稳定标识）",
+        definition: "不随标题、路径、模型或画布位置变化的对象身份，使跨模块引用和长期搜索不会断裂。",
+      },
+      {
+        term: "SemanticNode（语义节点）",
+        definition: "对 Mission、模块、蓝图、任务、文件或成果在项目意义结构中的投影，不等同于物理目录。",
+      },
+      {
+        term: "DependencyEdge（依赖边）",
+        definition: "说明模块、蓝图、任务和成果在语义上的前置、消费或影响关系，并可下钻到权威来源。",
+      },
+    ],
+    designPrinciples: [
+      "金字塔把“系统归属”“施工层级”和“视觉缩放”严格拆成 S、B/T、LOD 三条坐标轴，避免用户缩放页面时误以为项目状态或权限也发生了变化。",
+      "它是一张共享事实的语义地图，而不是文件管理器或第二套任务数据库。节点通过稳定 UID 引用 COMMAND、ROOT、TREE 和 EDEN 的权威对象，因此能从塔尖连续下钻，也能从局部结果安全返回总使命。",
+    ],
     responsibility: [
       "投影 S0→S1→S2+ 的系统/领域结构，以及 B0→B∞、T0→T∞ 的施工语义层级。",
       "为模块、蓝图、任务、成果与依赖分配稳定 UID，并提供多分辨率视图。",
@@ -387,6 +567,36 @@ export const moduleCatalog = [
     subtitle: "Repository Explorer & Git",
     lede: "扎进本地仓库、Git、物理文件与依赖，提供可解释的搜索和恢复引用，但默认不替用户整理或删除文件。",
     illustration: "assets/illustrations/git-roots-v1.png",
+    terminology: [
+      {
+        term: "Workspace（工作区）",
+        definition: "当前 Mission 绑定的真实本地项目目录，是文件内容和目录结构的权威来源，而不是 Kernel 数据库的副本。",
+      },
+      {
+        term: "FileRef（文件引用）",
+        definition: "带稳定 UID、当前路径、类型、哈希和更新时间的文件索引记录；路径改变后身份仍可追踪。",
+      },
+      {
+        term: "Content Hash（内容哈希）",
+        definition: "用于识别准确文件版本、重命名与重复内容的摘要，是追溯上下文和证据版本的重要锚点。",
+      },
+      {
+        term: "GitBinding（Git 绑定）",
+        definition: "把文件或治理检查点连接到仓库、分支、提交和工作树状态的引用，不复制 Git 历史。",
+      },
+      {
+        term: "ModuleBinding（模块投影绑定）",
+        definition: "文件到十三领域的可解释分类，记录规则版本、理由、置信度和人工修正；它只建立索引，不移动文件。",
+      },
+      {
+        term: "Checkpoint Projection（检查点投影）",
+        definition: "ROOT 对 Kernel 检查点中的 Git 锚点和文件恢复信息的显示；检查点本身仍由 Kernel 统一拥有。",
+      },
+    ],
+    designPrinciples: [
+      "根系遵守“先索引、后建议、经授权再变更”。真实文件系统与 Git 是物理事实源，模块默认只读扫描并建立 FileRef、哈希、依赖和风险投影，不因自动分类而改名、移动或删除用户文件。",
+      "稳定身份不绑定路径，搜索也不只依赖向量召回。精确路径、全文、Git、来源和权限过滤始终保留；语义或向量检索只是可选补充，并且每个结果都必须回到真实文件版本。",
+    ],
     responsibility: [
       "按忽略规则只读扫描 Workspace，建立稳定 FileRef、内容哈希、类型和更新时间索引。",
       "提供文本/图片/PDF 预览、上下文勾选、依赖图、Git 分支/Diff/工作树风险。",
@@ -447,6 +657,36 @@ export const moduleCatalog = [
     subtitle: "Knowledge Ingestion & Retrieval",
     lede: "消化论文、网页、仓库、数据集与外部 Skill 的知识来源，保留许可证、版本、引用和可信度。",
     illustration: "assets/illustrations/wisdom-well-v1.png",
+    terminology: [
+      {
+        term: "ContextResource（上下文资源）",
+        definition: "不同本地或外部 Provider 统一返回的 Miracle 知识对象，包含内容层级、来源、版本、许可和稳定引用。",
+      },
+      {
+        term: "Source Registry（来源登记）",
+        definition: "记录论文、网页、仓库、数据集、API 或外部 Skill 的原始位置、固定版本和使用状态。",
+      },
+      {
+        term: "Provenance（来源链）",
+        definition: "从摘要或检索片段返回原文、哈希、许可证、抽取步骤与引用关系的可审计链路。",
+      },
+      {
+        term: "Ingestion Queue（摄取队列）",
+        definition: "对资源执行解析、抽取、摘要、索引和失败重试的可跟踪流程，不把未完成处理伪装成可用知识。",
+      },
+      {
+        term: "Hierarchical Catalog（分层目录）",
+        definition: "以 L0 摘要、L1 概览、L2 原文组织同一资源，便于按 token 预算逐级展开而不丢失出处。",
+      },
+      {
+        term: "Retrieval（检索）",
+        definition: "结合目录、关键词、可选语义召回和重排寻找相关资源，并在返回前应用来源、许可与权限过滤。",
+      },
+    ],
+    designPrinciples: [
+      "智慧之泉把“找到资料”和“可信地使用资料”视为同一件事：任何摘要或检索结果都必须带来源、版本、许可证和回到原文的路径，外部知识不会仅凭模型总结升级为项目事实。",
+      "模块采用 Provider 中立、本地优先的 ContextResource 契约。可选外部服务可以替换摄取或检索实现，但不能绑架 Mission 数据；可执行 Skill 只在这里作为知识来源登记，实际启用与权限仍归众神武库。",
+    ],
     responsibility: [
       "登记外部来源、许可证、固定版本、哈希、可信度和完整 provenance。",
       "编排解析、抽取、摘要与索引，提供 L0 摘要、L1 概览、L2 原文。",
@@ -507,6 +747,36 @@ export const moduleCatalog = [
     subtitle: "Human Learning Workspace",
     lede: "把项目中的 AI、代码和技术栈翻译成人类能理解、能质疑、能复习的学习路径，让人始终掌握方向盘。",
     illustration: "assets/illustrations/athena-learning-academy-v1.png",
+    terminology: [
+      {
+        term: "Concept Inbox（概念收件箱）",
+        definition: "从当前 Mission 中收集人类尚未理解、需要解释或验证的术语与技术决定，不自动标记为已掌握。",
+      },
+      {
+        term: "Glossary Entry（术语卡）",
+        definition: "带来源、白话解释、工程含义和相关对象引用的学习条目，帮助人理解项目自己的技术语言。",
+      },
+      {
+        term: "Learning Path（学习路径）",
+        definition: "围绕当前 Mission 目标和前置知识排列的渐进学习序列，避免把所有 AI 知识一次性灌给用户。",
+      },
+      {
+        term: "Study Note（学习笔记）",
+        definition: "人类保存的例子、疑问、理解和反驳，属于学习材料，不自动成为戒律、决定或项目事实。",
+      },
+      {
+        term: "Knowledge Check（理解检查）",
+        definition: "用自测、复述或小任务检查概念是否真正掌握，并记录待复习项，而不是以阅读次数推断理解。",
+      },
+      {
+        term: "Human Annotation（人类注释）",
+        definition: "人类对概念、来源或 Agent 解释添加的判断与上下文，必须与模型生成内容和权威治理事实区分。",
+      },
+    ],
+    designPrinciples: [
+      "雅典娜学宫服务的是人类理解，而不是替 Agent 增加一份隐形记忆。神话名称降低认知门槛，白话解释、工程术语、来源和对象引用则确保用户能够质疑并验证系统。",
+      "学习采用与当前 Mission 相关的渐进披露：先解释眼前决定所需的概念，再沿学习路径展开。学习笔记与掌握状态属于人类，不能未经批准变成戒律、蓝图或模型可用的权威事实。",
+    ],
     responsibility: [
       "收集尚未理解的概念，建立带来源的术语卡、示例和项目语境。",
       "为当前 Mission 组织学习路径、个人笔记、问题、自测与复习状态。",
@@ -567,6 +837,36 @@ export const moduleCatalog = [
     subtitle: "Experiment Registry & Evaluation",
     lede: "把真正的实验与普通工具调用分开，保存假设、数据、配置、种子、指标、失败和复现命令。",
     illustration: "assets/illustrations/renaissance-alchemy-experiment-lab-v1.png",
+    terminology: [
+      {
+        term: "Hypothesis（假设）",
+        definition: "运行前登记、能够被结果支持或反驳的明确问题与预期判断，避免看到结果后倒推目标。",
+      },
+      {
+        term: "Config Fingerprint（配置指纹）",
+        definition: "由模型、代码、参数、环境和依赖版本生成的准确配置身份，用于判断两次运行是否真正可比较。",
+      },
+      {
+        term: "Dataset Version（数据版本）",
+        definition: "实验输入、划分、过滤规则与哈希的固定引用，使指标不会脱离准确数据集解释。",
+      },
+      {
+        term: "Experiment Run（实验运行）",
+        definition: "绑定假设、配置、数据、随机种子、资源消耗和原始产物的一次可复现运行；普通工具调用不自动属于实验。",
+      },
+      {
+        term: "Metric Definition（指标定义）",
+        definition: "在比较前说明计算方法、方向、聚合规则和适用范围的评价契约，不只保存一个脱离口径的数字。",
+      },
+      {
+        term: "Reproduction Command（复现入口）",
+        definition: "连同环境与输入引用重新运行实验的明确步骤或命令，是成果进入可复现结论的最低门槛之一。",
+      },
+    ],
+    designPrinciples: [
+      "实验神殿设置明确准入门槛：只有绑定假设、准确输入、配置指纹、结果和复现入口的运行才叫实验。这样观星台中的普通 Run 和工具调用不会被包装成科学证据。",
+      "模块保留失败、负结果和不确定性，并要求指标口径先于比较。它拥有实验记录与比较，不替伊甸园接受成果，也不让一次漂亮数字直接改写蓝图或戒律。",
+    ],
     responsibility: [
       "预注册 Hypothesis、判断标准、数据版本、配置指纹、环境和随机种子。",
       "记录可重复 ExperimentRun、原始指标、资源消耗、失败与完整产物。",
@@ -627,6 +927,36 @@ export const moduleCatalog = [
     subtitle: "Agent Registry & Delegation",
     lede: "管理 Agent 身份、能力、角色装配、任务指派与交接，让多 Agent 协作有边界、有谱系，而不是人数表演。",
     illustration: "assets/illustrations/agent-registry-council-v1.png",
+    terminology: [
+      {
+        term: "AgentProfile（Agent 档案）",
+        definition: "记录 Agent 的稳定身份、来源、生命周期和责任边界；它描述“谁在工作”，不等于底层 Agent Loop。",
+      },
+      {
+        term: "CapabilityProfile（能力画像）",
+        definition: "对 Agent 可用模型、Skill、工具、限制和适用任务的声明，实际能力仍需从众神武库和健康状态核验。",
+      },
+      {
+        term: "Preset（角色装配）",
+        definition: "为编码、研究、验证等角色组合 Agent、模型与能力的可版本化模板，不会自动获得超出戒律的权限。",
+      },
+      {
+        term: "Assignment（任务指派）",
+        definition: "把准确 WorkItem、职责、交付物、截止或停止条件分派给一个 Agent 的治理记录。",
+      },
+      {
+        term: "Subagent Lineage（子 Agent 谱系）",
+        definition: "记录受治理分支 Agent 的父级、任务范围、Session 和汇报关系，防止子 Agent 自行开启第二条主线。",
+      },
+      {
+        term: "Performance Record（执行评价）",
+        definition: "依据观星台轨迹和伊甸园 Verdict 形成的适用范围、完成质量与失败模式记录，不是模型自我评分。",
+      },
+    ],
+    designPrinciples: [
+      "天使议会把“Agent 是谁、被派去做什么”与“Agent 怎样推理和调用工具”分开。它治理身份、装配与委派，复用 Engine 的 Agent Registry、Session fork 和 Subagent 能力，不重新实现 Agent Loop 或沙盒。",
+      "多 Agent 的价值来自可解释分工而非数量。每次指派绑定准确 WorkItem 和边界，能力从武库装配、权限由戒律裁决、谱系写入世界树、表现依据可重放证据评价。",
+    ],
     responsibility: [
       "登记 Agent 身份、来源、生命周期、能力限制和适用工作类型。",
       "把模型、Skill、工具和戒律装配为 Preset，并将明确 WorkItem 指派给 Agent。",
@@ -687,6 +1017,40 @@ export const moduleCatalog = [
     subtitle: "Tool, Skill, MCP & API Registry",
     lede: "把模型 API、Tool、Skill、MCP 与连接器做成可替换、可测试、最小权限的能力零件，并把凭据留在安全边界内。",
     illustration: "assets/illustrations/tool-registry-gateway-v1.png",
+    terminology: [
+      {
+        term: "Provider / Connector（提供方 / 连接器）",
+        definition: "把模型 API、REST、SSE、Webhook 或 WebSocket 服务映射为受控能力的版本化适配器。",
+      },
+      {
+        term: "ToolProfile（工具档案）",
+        definition: "声明工具名称、JSON Schema、执行 Provider、数据访问、网络访问、风险和所需权限的注册记录。",
+      },
+      {
+        term: "Skill（技能）",
+        definition: "可发现、可装配的工作方法与配套资源；登记或阅读 Skill 不等于获得执行其工具的权限。",
+      },
+      {
+        term: "MCP Connector（MCP 连接器）",
+        definition: "登记 MCP Server 的来源、能力、版本、健康和授权范围，使外部工具可替换且可撤销。",
+      },
+      {
+        term: "CredentialRef（凭据引用）",
+        definition: "指向操作系统安全存储中密钥的非明文标识；Renderer、日志、数据库和胶囊不得保存或回显真实密钥。",
+      },
+      {
+        term: "PolicyBinding（政策绑定）",
+        definition: "把某项能力与适用戒律、允许路径、网络范围和批准要求连接起来的治理关系。",
+      },
+      {
+        term: "Health Check（健康检查）",
+        definition: "验证连接、版本、能力、速率和失败降级是否可用的探测结果；可用性不会自动代表本次 Run 已获授权。",
+      },
+    ],
+    designPrinciples: [
+      "众神武库是能力目录和安全网关，不是工具调用历史。它让模型、API、Tool、Skill 与 MCP 像沙盒零件一样独立组合、升级和撤销，同时把每项能力的来源、版本、Schema、风险和健康状态暴露给治理层。",
+      "安全边界采用凭据引用与最小权限：明文密钥只进入操作系统安全存储和受限代理；真正启用能力还要通过戒律预检。工具实际怎样被调用、耗时与结果如何，则由观星台从原始事件投影。",
+    ],
     responsibility: [
       "登记工具 Schema、风险、执行 Provider，Skill 来源/版本，以及 MCP/API 能力和健康状态。",
       "管理 DeepSeek、OpenAI-compatible、Anthropic、Gemini 等模型 Provider 的能力差异和连接测试。",
@@ -747,6 +1111,40 @@ export const moduleCatalog = [
     subtitle: "Run Observability & Recovery",
     lede: "把 Agent 的输出流、步骤、工具、Token、成本、异常和恢复投影成可检查信号，并始终链接到原始事件。",
     illustration: "assets/illustrations/run-observatory-trace-explorer-v1.png",
+    terminology: [
+      {
+        term: "Session Event（会话事件）",
+        definition: "Engine append-only 日志中的 Turn、Step、Tool、stream、error 或 lifecycle 原始执行事实，观星台只能读取和关联。",
+      },
+      {
+        term: "RunBinding（运行绑定）",
+        definition: "把运行事件连接到准确 Mission、WorkItem、Execution Envelope、Provider 与 Agent 的稳定关系。",
+      },
+      {
+        term: "Observation（观测）",
+        definition: "从原始事件中提取的状态、耗时、错误或行为信号，必须保留事件引用并与治理判决区分。",
+      },
+      {
+        term: "TraceProjection（轨迹投影）",
+        definition: "将 Turn、Step、Tool、Artifact 和 Review 按时间及关系组织成的可重放视图，不另造运行历史。",
+      },
+      {
+        term: "UsageSnapshot（用量快照）",
+        definition: "绑定准确 Run 和 Provider 的 token、成本、延迟与上下文占用记录，用于预算和跨运行比较。",
+      },
+      {
+        term: "Alert（异常信号）",
+        definition: "对越权、循环、漂移、长时间无检查点或可疑幻觉迹象的可检查提示，不是 Agent“作弊”的自动定罪。",
+      },
+      {
+        term: "RecoveryRecord（恢复记录）",
+        definition: "记录崩溃、中断、停止、对账和恢复过程及其检查点，让失败不会从项目历史中消失。",
+      },
+    ],
+    designPrinciples: [
+      "观星台以 Engine 的 durable Session events 为原始执行事实，所有时间线、用量和告警都只是带来源的投影。刷新或重启后应能确定性重建，而不是维护第二份容易漂移的运行历史。",
+      "可观测性服务于理解与恢复，不充当裁判。异常与幻觉/作弊只能显示为信号，再交给戒律、验证器、伊甸园或人类判断；观星台自身不处罚 Agent、不验收成果，也不改写规则。",
+    ],
     responsibility: [
       "显示当前 Run 状态、输出流、暂停/取消，以及 Turn/Step/Tool/Artifact/Review 时间线。",
       "聚合工具输入摘要、结果、耗时、错误、token、成本、延迟和上下文占用。",
@@ -803,6 +1201,7 @@ export const moduleCatalog = [
 ];
 
 const requiredListFields = [
+  "designPrinciples",
   "responsibility",
   "notResponsible",
   "inputs",
@@ -852,6 +1251,29 @@ export function validateModuleCatalog(catalog = moduleCatalog) {
       if (!Array.isArray(module[field]) || module[field].length === 0) {
         throw new Error(`${module.id} is missing ${field}`);
       }
+      if (module[field].some((item) => typeof item !== "string" || item.trim() === "")) {
+        throw new Error(`${module.id} has invalid ${field} content`);
+      }
+    }
+    if (!Array.isArray(module.terminology) || module.terminology.length < 4 || module.terminology.length > 7) {
+      throw new Error(`${module.id} must define between 4 and 7 Agent Harness terms`);
+    }
+    const terminologyNames = new Set();
+    for (const item of module.terminology) {
+      if (
+        typeof item !== "object" ||
+        item === null ||
+        typeof item.term !== "string" ||
+        item.term.trim() === "" ||
+        typeof item.definition !== "string" ||
+        item.definition.trim() === ""
+      ) {
+        throw new Error(`${module.id} has an invalid Agent Harness term`);
+      }
+      if (terminologyNames.has(item.term)) {
+        throw new Error(`${module.id} has a duplicate Agent Harness term: ${item.term}`);
+      }
+      terminologyNames.add(item.term);
     }
     for (const season of ["spring", "summer", "autumn", "winter"]) {
       if (typeof module.seasons?.[season] !== "string" || !module.seasons[season]) {
@@ -898,6 +1320,23 @@ function renderRelations(title, slugs, catalogBySlug) {
     })
     .join("");
   return `<div class="module-page-relation-group"><h3>${escapeHtml(title)}</h3><div class="module-page-relation-list">${links}</div></div>`;
+}
+
+function renderDesignPrinciples(paragraphs) {
+  return `<div class="module-page-design-copy">${paragraphs
+    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("")}</div>`;
+}
+
+function renderTerminology(terminology) {
+  return `<dl class="module-page-terminology-grid">${terminology
+    .map(
+      ({ term, definition }) => `<div class="module-page-term-card">
+        <dt class="module-page-term">${escapeHtml(term)}</dt>
+        <dd class="module-page-term-definition">${escapeHtml(definition)}</dd>
+      </div>`,
+    )
+    .join("")}</dl>`;
 }
 
 export function renderModulePage(module, catalog = moduleCatalog) {
@@ -974,6 +1413,17 @@ export function renderModulePage(module, catalog = moduleCatalog) {
     </section>
 
     <div class="module-page-grid">
+      <section class="module-page-section module-page-section-wide module-page-design" aria-labelledby="module-design-title">
+        <p class="module-page-section-kicker">为什么这样设计</p>
+        <h2 id="module-design-title">设计理念</h2>
+        ${renderDesignPrinciples(module.designPrinciples)}
+      </section>
+      <section class="module-page-section module-page-section-wide module-page-terminology" aria-labelledby="module-terminology-title">
+        <p class="module-page-section-kicker">Miracle × Agent Harness</p>
+        <h2 id="module-terminology-title">Agent Harness 术语</h2>
+        <p class="module-page-terminology-intro">这些词描述本模块真正拥有或消费的产品对象；它们与底层 Engine 的 Session、Agent Loop 和工具执行保持清晰边界。</p>
+        ${renderTerminology(module.terminology)}
+      </section>
       ${renderSection("职责", module.responsibility, "它拥有的事实")}
       ${renderSection("明确不负责", module.notResponsible, "边界先于能力")}
       ${renderSection("输入", module.inputs, "进入模块")}

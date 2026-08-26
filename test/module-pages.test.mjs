@@ -4,6 +4,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { promisify } from "node:util";
 import { test } from "node:test";
 import {
+  escapeHtml,
   moduleCatalog,
   renderModulePage,
   validateModuleCatalog,
@@ -37,6 +38,8 @@ const requiredHeadings = [
   "四季行为",
   "上下游关系",
   "当前状态",
+  "设计理念",
+  "Agent Harness 术语",
   "下一阶段与验收",
 ];
 
@@ -60,6 +63,36 @@ test("the catalog defines the thirteen approved S1 modules in product order", ()
     requiredIds,
   );
   assert.equal(new Set(moduleCatalog.map((module) => module.slug)).size, 13);
+  for (const module of moduleCatalog) {
+    assert.ok(module.designPrinciples.length >= 2, `${module.id} lacks design principles`);
+    assert.ok(
+      module.terminology.length >= 4 && module.terminology.length <= 7,
+      `${module.id} has the wrong terminology count`,
+    );
+    assert.equal(
+      new Set(module.terminology.map(({ term }) => term)).size,
+      module.terminology.length,
+      `${module.id} has duplicate terms`,
+    );
+    for (const item of module.terminology) {
+      assert.ok(item.term.trim(), `${module.id} has an empty term`);
+      assert.ok(item.definition.trim(), `${module.id} has an empty term definition`);
+    }
+  }
+});
+
+test("catalog validation rejects missing or malformed Agent Harness terminology", () => {
+  const missingTerms = structuredClone(moduleCatalog);
+  missingTerms[0].terminology = [];
+  assert.throws(() => validateModuleCatalog(missingTerms), /between 4 and 7 Agent Harness terms/u);
+
+  const missingDefinition = structuredClone(moduleCatalog);
+  missingDefinition[0].terminology[0].definition = "";
+  assert.throws(() => validateModuleCatalog(missingDefinition), /invalid Agent Harness term/u);
+
+  const duplicateTerm = structuredClone(moduleCatalog);
+  duplicateTerm[0].terminology[1].term = duplicateTerm[0].terminology[0].term;
+  assert.throws(() => validateModuleCatalog(duplicateTerm), /duplicate Agent Harness term/u);
 });
 
 test("the build emits exactly thirteen clean module directories", async () => {
@@ -83,6 +116,24 @@ test("every module page has the full contract, honest phases and brand assets", 
     assert.match(html, />v0\.1 事实</u);
     assert.match(html, />候选蓝图</u);
     assert.match(html, />长期愿景</u);
+    assert.equal(
+      (html.match(/class="module-page-term-card"/gu) ?? []).length,
+      module.terminology.length,
+      `${module.id} does not render every term`,
+    );
+    for (const paragraph of module.designPrinciples) {
+      assert.ok(html.includes(`<p>${escapeHtml(paragraph)}</p>`), `${module.id} omits a design principle`);
+    }
+    for (const { term, definition } of module.terminology) {
+      assert.ok(
+        html.includes(`<dt class="module-page-term">${escapeHtml(term)}</dt>`),
+        `${module.id} omits the term ${term}`,
+      );
+      assert.ok(
+        html.includes(`<dd class="module-page-term-definition">${escapeHtml(definition)}</dd>`),
+        `${module.id} omits the definition for ${term}`,
+      );
+    }
     assert.match(html, new RegExp(`/${module.illustration.replaceAll("/", "\\/")}`, "u"));
     assert.match(html, /\/assets\/brand\/miracle-bird-mark-v1\.png/u);
     assert.match(html, /href="\/"/u);
@@ -119,6 +170,11 @@ test("module rendering escapes dynamic text and emits no executable markup", () 
     lede: attack,
     responsibility: [attack],
     coreObjects: [attack],
+    designPrinciples: [attack],
+    terminology: [
+      { term: attack, definition: attack },
+      ...moduleCatalog[0].terminology.slice(1),
+    ],
     nextStage: attack,
     status: { ...moduleCatalog[0].status, current: attack },
   };
@@ -126,6 +182,7 @@ test("module rendering escapes dynamic text and emits no executable markup", () 
   assert.doesNotMatch(html, /<script\b|<img src=x/u);
   assert.match(html, /&lt;script&gt;alert\(&quot;module&quot;\)&lt;\/script&gt;/u);
   assert.match(html, /&lt;img src=x onerror=alert\(1\)&gt;/u);
+  assert.doesNotMatch(html, /<dt[^>]*><script|<dd[^>]*><script/u);
 });
 
 test("generated module pages contain no secret material or client scripts", async () => {
