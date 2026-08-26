@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
+import "./module-pages.test.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -63,6 +64,13 @@ test("the D1 schema stores only a salted IP hash for rate limiting", async () =>
 
 test("the build has an explicit public allowlist", async () => {
   const buildScript = await readFile(new URL("scripts/build.mjs", root), "utf8");
-  assert.match(buildScript, /\["index\.html", "styles\.css", "app\.js", "assets"\]/u);
+  assert.match(
+    buildScript,
+    /const publicAllowlist = \["index\.html", "styles\.css", "app\.js", "assets", "modules"\]/u,
+  );
+  assert.match(
+    buildScript,
+    /const copiedEntries = \["index\.html", "styles\.css", "app\.js", "assets"\]/u,
+  );
   assert.doesNotMatch(buildScript, /cp\(projectRoot,\s*distDir/u);
 });

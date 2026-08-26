@@ -18,22 +18,21 @@
 </head>
 <body>
 
-  <!-- ===== 顶栏 ===== -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand-block" href="#top">
+      <a class="brand-block" href="#top" aria-label="奇迹 Harness 首页">
         <span class="brand-mark"><img src="assets/brand/miracle-bird-mark-v1.png" alt="奇迹 Harness 金绿神鸟图腾" data-i18n-alt="alt.brand" /></span>
-        <span class="brand-name"><b data-i18n="brand.name">奇迹 Harness</b><small data-i18n="brand.sub">MIRACLE HARNESS</small></span>
+        <span class="brand-name"><b data-i18n="brand.name">奇迹 Harness</b></span>
       </a>
       <nav class="main-nav" aria-label="主导航">
-        <a href="#features" data-i18n="nav.features">为什么</a>
-        <a href="#domains" data-i18n="nav.domains">领域</a>
+        <a href="#domains" data-i18n="nav.domains">模块</a>
         <a href="#seasons" data-i18n="nav.seasons">四季</a>
+        <a href="#status" data-i18n="status.eyebrow">当前状态</a>
         <a href="#local" data-i18n="nav.local">本地优先</a>
-        <a href="#download" data-i18n="nav.download">下载</a>
         <a href="#guestbook" data-i18n="nav.guestbook">留言</a>
       </nav>
       <div class="header-actions">
+        <a class="header-github" href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer" data-i18n="nav.github">GitHub</a>
         <button id="lang-toggle" class="lang-toggle" type="button" aria-label="切换语言 / Switch language">EN</button>
         <a class="btn btn-primary" href="#download" data-i18n="nav.cta">下载 Alpha</a>
       </div>
@@ -42,8 +41,10 @@
 
   <main id="top">
 
-    <!-- ===== Hero ===== -->
     <section class="hero">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/illustrations/hero-sanctuary-v1.png" alt="" fetchpriority="high" decoding="async" />
+      </div>
       <div class="hero-inner">
         <div class="hero-copy">
           <span class="eyebrow" data-i18n="hero.eyebrow">LONG-HORIZON AGENT HARNESS · 初代原型</span>
@@ -53,7 +54,6 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip" data-i18n="hero.cta1">下载 Windows 初代原型</a>
             <a class="btn btn-ghost" href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta2">阅读完整构想 →</a>
-            <a class="btn btn-ghost" href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta3">查看 GitHub 源码 →</a>
           </div>
           <div class="hero-badges">
             <span class="chip chip-alpha" data-i18n="hero.badge1">v0.1.0-alpha.1 · Alpha</span>
@@ -63,145 +63,295 @@
           </div>
           <p class="alpha-note" data-i18n="hero.alpha">Alpha 会持续进化，适合体验、研究与共同设计，请先用于可恢复的非关键项目。</p>
         </div>
-        <div class="hero-visual">
-          <img src="assets/illustrations/hero-sanctuary-v1.png" alt="奇迹 Harness 圣所俯瞰图" data-i18n-alt="alt.hero" />
+      </div>
+    </section>
+
+    <nav class="channel-band" aria-label="产品频道">
+      <div class="channel-inner">
+        <a class="channel-primary" href="#control-center">
+          <strong data-i18n="channel.console">中控台</strong>
+          <span>S0 · CONTROL PLANE</span>
+        </a>
+        <a class="channel-primary" href="#agent-meeting">
+          <strong data-i18n="channel.meeting">Agent 会议</strong>
+          <span>UNIFIED WORKSPACE</span>
+        </a>
+        <a href="#domains"><span data-i18n="channel.vision">十三个模块</span><small>13 S1 DOMAINS</small></a>
+        <a href="#seasons"><span data-i18n="nav.seasons">四季</span><small>SPRING → WINTER</small></a>
+        <a href="#download"><span data-i18n="nav.download">下载</span><small>WINDOWS ALPHA</small></a>
+        <a href="https://github.com/tmdysx/miracle-harness-site" target="_blank" rel="noopener noreferrer"><span data-i18n="channel.siteSource">网站源码</span><small>OPEN SOURCE</small></a>
+      </div>
+    </nav>
+
+    <section class="value-strip" id="features" aria-label="产品核心能力">
+      <article><b data-i18n="feat1.title">俯瞰全局</b><span data-i18n="feat1.desc">项目目标、施工层级、季节与下一任务一屏尽览。</span></article>
+      <article><b data-i18n="feat2.title">治理文件</b><span data-i18n="feat2.desc">记录职责、依赖与证据，让模块拥有自己的上下文。</span></article>
+      <article><b data-i18n="feat3.title">编排提示词</b><span data-i18n="feat3.desc">指令与上下文胶囊可以被 Agent 读取并接力。</span></article>
+      <article><b data-i18n="feat4.title">控制进程</b><span data-i18n="feat4.desc">质量门与人工验收决定果实是否被接受。</span></article>
+      <article><b data-i18n="feat5.title">主动压缩上下文</b><span data-i18n="feat5.desc">换对话、模型或工具后仍可从关键状态继续。</span></article>
+    </section>
+
+    <section class="section workspace-section" aria-labelledby="workspace-title">
+      <div class="section-head section-head-row">
+        <div>
+          <span class="eyebrow">ALWAYS-ON WORK SURFACES</span>
+          <h2 id="workspace-title" data-i18n="workspace.title">两个跨域工作面，不计入十三个 S1 模块</h2>
         </div>
+        <p class="section-lead" data-i18n="workspace.lead">中控台负责全局态势，Agent 会议负责统一对话与执行入口；它们连接所有模块，但不替代任何领域的职责。</p>
       </div>
-    </section>
-
-    <!-- ===== 为什么 ===== -->
-    <section class="section" id="features">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="features.eyebrow">WHY MIRACLE HARNESS</span>
-        <h2 data-i18n="features.title">它不是又一块画布，而是项目的全景驾驶舱</h2>
-        <p class="section-lead" data-i18n="features.lead">长程项目最大的敌人是「失忆」与「失序」。奇迹 Harness 让人类与 Agent 始终共享同一张项目地图，无论换对话、换模型还是换工具。</p>
-      </div>
-      <div class="cards features-grid">
-        <article class="card feature-card">
-          <h3 data-i18n="feat1.title">俯瞰全局</h3>
-          <p data-i18n="feat1.desc">项目目标、施工层级、季节轮回与唯一任务一屏尽览，不再迷失在碎片对话里。</p>
-        </article>
-        <article class="card feature-card">
-          <h3 data-i18n="feat2.title">治理文件</h3>
-          <p data-i18n="feat2.desc">以「砖块」组织代码与文档，记录职责、依赖与决策证据，让每个模块都有自己的上下文。</p>
-        </article>
-        <article class="card feature-card">
-          <h3 data-i18n="feat3.title">编排提示词</h3>
-          <p data-i18n="feat3.desc">写入收件箱的指令，由 Agent 在任意对话中读取执行；上下文胶囊随时打包交接。</p>
-        </article>
-        <article class="card feature-card">
-          <h3 data-i18n="feat4.title">控制进程</h3>
-          <p data-i18n="feat4.desc">四层质量门 + 伊甸园人工验收：果实只有通过验收才被接受，返工、延期与堆肥都有去处。</p>
-        </article>
-        <article class="card feature-card">
-          <h3 data-i18n="feat5.title">主动压缩上下文</h3>
-          <p data-i18n="feat5.desc">切对话、换模型、换工具时，自动把关键状态压进胶囊，新 Agent 读完即续上。</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===== 领域 ===== -->
-    <section class="section section-alt" id="domains">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="domains.eyebrow">COMPOSABLE SANDBOX</span>
-        <h2 data-i18n="domains.title">初代先点亮塔尖，再逐层扩建整座奇迹</h2>
-        <p class="section-lead" data-i18n="domains.lead">v0.1 Alpha 先打通中控台、蓝图、世界树、金字塔、根系与 Agent 会议；其余圣殿是可独立组装、升级与放大搜索的长期地图。</p>
-      </div>
-      <div class="cards domains-grid">
-
-        <article class="card domain-card domain-card-s0">
-          <span class="domain-tag">S0 · SHELL</span>
+      <div class="workspace-grid">
+        <article class="workspace-card workspace-card-primary" id="control-center">
+          <div class="workspace-card-head">
+            <span class="domain-tag">S0 · CONTROL PLANE</span>
+            <span class="module-status status-partial" data-i18n="status.partial">已实现基础</span>
+          </div>
           <h3 data-i18n="d0.title">中控台</h3>
-          <p data-i18n="d0.desc">项目全景、导航、状态投影与领域快捷入口，一切的起点。</p>
+          <p data-i18n="d0.desc">汇总 Mission、纪元、季节、B0、治理状态、模型连接与 Git 健康，给人类一张可核验的全局快照。</p>
+          <dl class="workspace-io">
+            <div><dt data-i18n="workspace.console.in">读入</dt><dd>Mission · Epoch · Season · B0 · Laws · Engine</dd></div>
+            <div><dt data-i18n="workspace.console.out">给出</dt><dd>Snapshot · Blockers · One next action</dd></div>
+          </dl>
         </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/human-planner-v1.png" alt="蓝图规划台" data-i18n-alt="alt.d1" />
-          <h3 data-i18n="d1.title">蓝图规划台</h3>
-          <p data-i18n="d1.desc">项目目标、分层计划、施工顺序、验收清单和任务签收。</p>
+        <article class="workspace-card" id="agent-meeting">
+          <div class="workspace-card-head">
+            <span class="domain-tag">CROSS-DOMAIN · WORKSPACE</span>
+            <span class="module-status status-narrow" data-i18n="status.narrow">窄闭环</span>
+          </div>
+          <h3 data-i18n="workspace.meeting.title">Agent 会议</h3>
+          <p data-i18n="workspace.meeting.desc">统一承载模型接入、文本对话、停止、重放与项目重绑定；它是工作面，不是决策权威，也不是 Agent 注册表。</p>
+          <dl class="workspace-io">
+            <div><dt data-i18n="workspace.meeting.in">接入</dt><dd>OpenAI-compatible API · Context · Prompt</dd></div>
+            <div><dt data-i18n="workspace.meeting.out">产出</dt><dd>Messages · Run state · Evidence links</dd></div>
+          </dl>
         </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/yggdrasil-task-tree-v1.png" alt="世界树" data-i18n-alt="alt.d2" />
-          <h3 data-i18n="d2.title">世界树</h3>
-          <p data-i18n="d2.desc">对话主干、会话分支、指令调用，以及计划、果实与胶囊引用。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/agent-registry-council-v1.png" alt="天使议会" data-i18n-alt="alt.d3" />
-          <h3 data-i18n="d3.title">天使议会</h3>
-          <p data-i18n="d3.desc">Agent 身份、能力、任务分配与交接入口。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/tool-registry-gateway-v1.png" alt="众神武库" data-i18n-alt="alt.d4" />
-          <h3 data-i18n="d4.title">众神武库</h3>
-          <p data-i18n="d4.desc">外接工具、能力契约和统一调用边界。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/harvest-orchard-v1.png" alt="伊甸园" data-i18n-alt="alt.d5" />
-          <h3 data-i18n="d5.title">伊甸园</h3>
-          <p data-i18n="d5.desc">当前实现、验证证据与人工接受或退回决定。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/wisdom-well-v1.png" alt="智慧之泉" data-i18n-alt="alt.d6" />
-          <h3 data-i18n="d6.title">智慧之泉</h3>
-          <p data-i18n="d6.desc">外部论文、代码、数据和能力的项目入口。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/covenant-rules-sanctuary-v1.png" alt="戒律石板" data-i18n-alt="alt.d7" />
-          <h3 data-i18n="d7.title">戒律石板</h3>
-          <p data-i18n="d7.desc">五类原子戒律、Agent 角色包、绑定校验和 Effective Policy 编译。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/athena-learning-academy-v1.png" alt="雅典娜学宫" data-i18n-alt="alt.d8" />
-          <h3 data-i18n="d8.title">雅典娜学宫</h3>
-          <p data-i18n="d8.desc">工作现场产生的人类学习知识库入口。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/egypt-project-pyramid-v2.png" alt="项目金字塔" data-i18n-alt="alt.d9" />
-          <h3 data-i18n="d9.title">项目金字塔</h3>
-          <p data-i18n="d9.desc">LOD、季节和项目街区，把长程项目切成可治理的层。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/git-roots-v1.png" alt="项目根系" data-i18n-alt="alt.d10" />
-          <h3 data-i18n="d10.title">项目根系</h3>
-          <p data-i18n="d10.desc">文件浏览与砖块上下文：让每个文件都有自己的来龙去脉。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/renaissance-alchemy-experiment-lab-v1.png" alt="实验神殿" data-i18n-alt="alt.d11" />
-          <h3 data-i18n="d11.title">实验神殿</h3>
-          <p data-i18n="d11.desc">实验账本与配置指纹，每次实验都可复现、可回溯。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/run-observatory-trace-explorer-v1.png" alt="观星台" data-i18n-alt="alt.d12" />
-          <h3 data-i18n="d12.title">观星台</h3>
-          <p data-i18n="d12.desc">Agent 运行、事件轨迹、异常和验证证据回溯。</p>
-        </article>
-
-        <article class="card domain-card">
-          <img src="assets/illustrations/seasons-cycle-sanctuary-v1.png" alt="上下文胶囊" data-i18n-alt="alt.d13" />
-          <h3 data-i18n="d13.title">上下文胶囊</h3>
-          <p data-i18n="d13.desc">主动压缩和模型接力：状态可以跨对话、跨模型地续上。</p>
-        </article>
-
       </div>
     </section>
 
-    <!-- ===== 四季 ===== -->
-    <section class="section" id="seasons">
+    <section class="section section-alt module-directory" id="domains">
+      <div class="section-head module-directory-head">
+        <div>
+          <span class="eyebrow" data-i18n="domains.eyebrow">COMPOSABLE SANDBOX</span>
+          <h2 data-i18n="domains.title">十三个模块，不是十三座孤岛</h2>
+          <p class="section-lead" data-i18n="domains.lead">每个 S1 模块都有独立页面、明确边界、输入输出、核心对象、层级与四季职责；首页只负责让你快速找到它们。</p>
+        </div>
+        <label class="module-search">
+          <span class="sr-only" data-i18n="search.placeholder">搜索模块、职责或对象</span>
+          <input id="module-search" type="search" autocomplete="off" placeholder="搜索模块、职责或对象…" data-i18n-placeholder="search.placeholder" aria-controls="module-groups" />
+        </label>
+      </div>
+
+      <div class="module-toolbar" aria-label="模块筛选">
+        <div class="module-filters">
+          <button class="module-filter is-active" type="button" data-module-filter="all" aria-pressed="true" data-i18n="filter.all">全部 13</button>
+          <button class="module-filter" type="button" data-module-filter="governance" aria-pressed="false" data-i18n="group.governance">治理与代谢</button>
+          <button class="module-filter" type="button" data-module-filter="memory" aria-pressed="false" data-i18n="group.memory">记忆与结构</button>
+          <button class="module-filter" type="button" data-module-filter="agents" aria-pressed="false" data-i18n="group.agents">Agent 生态</button>
+          <button class="module-filter" type="button" data-module-filter="human" aria-pressed="false" data-i18n="group.human">人类学习</button>
+        </div>
+        <p id="module-search-status" class="module-search-status" role="status" aria-live="polite">显示 13 个模块</p>
+      </div>
+
+      <div class="module-groups" id="module-groups">
+        <section class="module-group" data-module-group="governance" aria-labelledby="group-governance-title">
+          <div class="module-group-head">
+            <div><span class="group-index">01</span><h3 id="group-governance-title" data-i18n="group.governance">治理与代谢</h3></div>
+            <p data-i18n="group.governance.desc">决定做什么、允许怎样做、如何验收，以及何时压缩与新陈代谢。</p>
+          </div>
+          <div class="module-grid">
+            <article class="module-card" data-module-card data-group="governance" data-search="blueprint 蓝图 规划 施工图 方案 mission workitem decision B0">
+              <a href="/modules/blueprint/">
+                <img src="assets/illustrations/human-planner-v1.png" alt="蓝图规划台" data-i18n-alt="alt.d1" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.COMMAND</span><span class="module-status status-partial" data-i18n="status.partial">部分实现</span></div>
+                  <h4 data-i18n="d1.title">蓝图规划台</h4>
+                  <p data-i18n="d1.desc">把终极目标分解为可批准、可施工、可验收的 B0→Bn 与 T0→Tn。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="governance" data-search="laws law 戒律 规则 施工规范 policy rule approval allow deny">
+              <a href="/modules/laws/">
+                <img src="assets/illustrations/covenant-rules-sanctuary-v1.png" alt="戒律石板" data-i18n-alt="alt.d7" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.LAW</span><span class="module-status status-candidate" data-i18n="status.candidate">候选蓝图</span></div>
+                  <h4 data-i18n="d7.title">戒律石板</h4>
+                  <p data-i18n="d7.desc">在行动前编译生效规则，明确允许、拒绝与必须由人类批准的边界。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="governance" data-search="eden 伊甸园 果实 成果 验收 证据 artifact review acceptance autumn">
+              <a href="/modules/eden/">
+                <img src="assets/illustrations/harvest-orchard-v1.png" alt="伊甸园" data-i18n-alt="alt.d5" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.EDEN</span><span class="module-status status-vision" data-i18n="status.vision">愿景</span></div>
+                  <h4 data-i18n="d5.title">伊甸园</h4>
+                  <p data-i18n="d5.desc">让成果带着验证证据进入秋收，由人类接受、退回、延期或堆肥。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="governance" data-search="time capsule 上下文胶囊 时光胶囊 压缩 代谢 handoff epoch recovery winter">
+              <a href="/modules/time-capsule/">
+                <img src="assets/illustrations/seasons-cycle-sanctuary-v1.png" alt="时光胶囊" data-i18n-alt="alt.d13" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.CAPSULE</span><span class="module-status status-foundation" data-i18n="status.foundation">基础对象</span></div>
+                  <h4 data-i18n="d13.title">时光胶囊</h4>
+                  <p data-i18n="d13.desc">保存纪元、压缩上下文、交接状态与冬季代谢，让长程任务可以恢复。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="module-group" data-module-group="memory" aria-labelledby="group-memory-title">
+          <div class="module-group-head">
+            <div><span class="group-index">02</span><h3 id="group-memory-title" data-i18n="group.memory">记忆与结构</h3></div>
+            <p data-i18n="group.memory.desc">把对话、项目层级、文件事实与外部知识放回各自正确的位置。</p>
+          </div>
+          <div class="module-grid">
+            <article class="module-card" data-module-card data-group="memory" data-search="world tree 世界树 对话 会话 分支 lineage session run work artifact">
+              <a href="/modules/world-tree/">
+                <img src="assets/illustrations/yggdrasil-task-tree-v1.png" alt="世界树" data-i18n-alt="alt.d2" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.TREE</span><span class="module-status status-projection" data-i18n="status.projection">只读投影</span></div>
+                  <h4 data-i18n="d2.title">世界树</h4>
+                  <p data-i18n="d2.desc">追踪会话、运行、工作项与成果之间的谱系，而不是把聊天当成孤立日志。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="memory" data-search="pyramid 金字塔 项目 文件 小项目 层级 LOD topology stable id brick">
+              <a href="/modules/pyramid/">
+                <img src="assets/illustrations/egypt-project-pyramid-v2.png" alt="项目金字塔" data-i18n-alt="alt.d9" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.PYRAMID</span><span class="module-status status-projection" data-i18n="status.projection">只读投影</span></div>
+                  <h4 data-i18n="d9.title">项目金字塔</h4>
+                  <p data-i18n="d9.desc">用稳定 ID、S/B/T 与 LOD 组织大型项目，让每层都能放大、缩小与治理。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="memory" data-search="roots 根系 文件 git repo dependencies search vector context brick">
+              <a href="/modules/roots/">
+                <img src="assets/illustrations/git-roots-v1.png" alt="项目根系" data-i18n-alt="alt.d10" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.ROOT</span><span class="module-status status-projection" data-i18n="status.projection">只读投影</span></div>
+                  <h4 data-i18n="d10.title">项目根系</h4>
+                  <p data-i18n="d10.desc">从仓库、Git、文件与依赖中吸收事实，形成可搜索的项目内部记忆。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="memory" data-search="wisdom well 智慧之泉 外部 skill 技能 知识 论文 代码 citation rag ingestion">
+              <a href="/modules/wisdom-well/">
+                <img src="assets/illustrations/wisdom-well-v1.png" alt="智慧之泉" data-i18n-alt="alt.d6" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.WELL</span><span class="module-status status-vision" data-i18n="status.vision">愿景</span></div>
+                  <h4 data-i18n="d6.title">智慧之泉</h4>
+                  <p data-i18n="d6.desc">消化外部论文、代码、数据与 Skill，保留来源后供项目检索和引用。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="module-group" data-module-group="agents" aria-labelledby="group-agents-title">
+          <div class="module-group-head">
+            <div><span class="group-index">03</span><h3 id="group-agents-title" data-i18n="group.agents">Agent 生态</h3></div>
+            <p data-i18n="group.agents.desc">把 Agent 身份、可用能力、运行证据与实验评估分开治理。</p>
+          </div>
+          <div class="module-grid">
+            <article class="module-card" data-module-card data-group="agents" data-search="angel council 天使议会 agent identity role delegation handoff api">
+              <a href="/modules/agent-council/">
+                <img src="assets/illustrations/agent-registry-council-v1.png" alt="天使议会" data-i18n-alt="alt.d3" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.ANGELS</span><span class="module-status status-vision" data-i18n="status.vision">愿景</span></div>
+                  <h4 data-i18n="d3.title">天使议会</h4>
+                  <p data-i18n="d3.desc">登记 Agent 身份、角色、能力与委派关系，但不把模型接口误当作 Agent 本身。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="agents" data-search="armory 众神武库 工具 skill mcp api model registry permission gateway">
+              <a href="/modules/armory/">
+                <img src="assets/illustrations/tool-registry-gateway-v1.png" alt="众神武库" data-i18n-alt="alt.d4" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.ARMORY</span><span class="module-status status-narrow" data-i18n="status.narrow">窄基础</span></div>
+                  <h4 data-i18n="d4.title">众神武库</h4>
+                  <p data-i18n="d4.desc">统一登记 Tool、Skill、MCP、API 与模型，以最小权限管理调用边界。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="agents" data-search="observatory 观星台 trace token cost hallucination cheating anomaly recovery">
+              <a href="/modules/observatory/">
+                <img src="assets/illustrations/run-observatory-trace-explorer-v1.png" alt="观星台" data-i18n-alt="alt.d12" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.OBSERVATORY</span><span class="module-status status-pending" data-i18n="status.pending">待施工</span></div>
+                  <h4 data-i18n="d12.title">观星台</h4>
+                  <p data-i18n="d12.desc">查看 Agent 轨迹、Token、成本、异常与验证证据，发现作弊和幻觉风险。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+            <article class="module-card" data-module-card data-group="agents" data-search="experiments 实验神殿 eval evaluation benchmark reproducible fingerprint">
+              <a href="/modules/experiments/">
+                <img src="assets/illustrations/renaissance-alchemy-experiment-lab-v1.png" alt="实验神殿" data-i18n-alt="alt.d11" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.EXPERIMENTS</span><span class="module-status status-vision" data-i18n="status.vision">愿景</span></div>
+                  <h4 data-i18n="d11.title">实验神殿</h4>
+                  <p data-i18n="d11.desc">保存实验配置、数据、指标和结论，让每次迭代可复现、可比较、可回滚。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="module-group" data-module-group="human" aria-labelledby="group-human-title">
+          <div class="module-group-head">
+            <div><span class="group-index">04</span><h3 id="group-human-title" data-i18n="group.human">人类学习</h3></div>
+            <p data-i18n="group.human.desc">让人类不仅指挥 Agent，也能理解工具、技术栈与共同工作中产生的知识。</p>
+          </div>
+          <div class="module-grid module-grid-single">
+            <article class="module-card" data-module-card data-group="human" data-search="athena academy 雅典娜学宫 learning glossary path human ai tech stack">
+              <a href="/modules/athena-academy/">
+                <img src="assets/illustrations/athena-learning-academy-v1.png" alt="雅典娜学宫" data-i18n-alt="alt.d8" loading="lazy" decoding="async" />
+                <div class="module-card-body">
+                  <div class="module-card-meta"><span>MH.ACADEMY</span><span class="module-status status-vision" data-i18n="status.vision">愿景</span></div>
+                  <h4 data-i18n="d8.title">雅典娜学宫</h4>
+                  <p data-i18n="d8.desc">把术语、技术栈与项目现场转化为适合人类理解的分层学习路径。</p>
+                  <span class="module-link" data-i18n="module.detail">查看模块设计 →</span>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+      </div>
+      <p id="module-empty" class="empty-state module-empty" hidden data-i18n="search.empty">没有找到匹配的模块，换一个关键词试试。</p>
+    </section>
+
+    <section class="section boundary-section" aria-labelledby="boundary-title">
+      <div class="section-head">
+        <span class="eyebrow">BOUNDARIES BEFORE FEATURES</span>
+        <h2 id="boundary-title" data-i18n="boundary.title">先把边界刻清楚，模块才能自由组装</h2>
+      </div>
+      <div class="boundary-grid">
+        <article><b>Agent 会议 ≠ 天使议会 ≠ 众神武库</b><p data-i18n="boundary.1">会议是工作面，议会管理 Agent 身份与委派，武库管理工具和接口。</p></article>
+        <article><b>智慧之泉 ≠ 众神武库</b><p data-i18n="boundary.2">智慧之泉消化外部知识，众神武库登记可执行能力。</p></article>
+        <article><b>项目金字塔 ≠ 项目根系</b><p data-i18n="boundary.3">金字塔表达语义层级，根系吸收仓库、Git、文件与依赖事实。</p></article>
+        <article><b>戒律石板 ≠ 伊甸园</b><p data-i18n="boundary.4">戒律在行动前约束，伊甸园在行动后依据证据验收成果。</p></article>
+      </div>
+    </section>
+
+    <section class="section seasons-section" id="seasons">
       <div class="section-head">
         <span class="eyebrow" data-i18n="seasons.eyebrow">SEASONS CYCLE</span>
         <h2 data-i18n="seasons.title">让项目像四季一样轮回</h2>
-        <p class="section-lead" data-i18n="seasons.lead">每轮施工都走完播种、生长、收获、维护四个季节，节奏清晰，结果可验。</p>
+        <p class="section-lead" data-i18n="seasons.lead">四季不是界面主题，而是蓝图、戒律、果实和上下文压缩共同驱动的生命周期。</p>
       </div>
       <div class="seasons">
         <article class="season season-spring">
@@ -221,14 +371,13 @@
         </article>
         <article class="season season-winter">
           <span class="season-num" data-i18n="seasons.s4.num">S4</span>
-          <h3 data-i18n="seasons.s4.title">冬季 · 维护</h3>
-          <p data-i18n="seasons.s4.desc">总结信息、更新接力胶囊、清理技术债务，决定下一轮是否分裂砖块或换壳。</p>
+          <h3 data-i18n="seasons.s4.title">冬季 · 代谢</h3>
+          <p data-i18n="seasons.s4.desc">压缩上下文、清理技术债务，并让蓝图与戒律适应下一纪元。</p>
         </article>
       </div>
     </section>
 
-    <!-- ===== 状态与架构 ===== -->
-    <section class="section section-ink">
+    <section class="section section-ink" id="status">
       <div class="section-head">
         <span class="eyebrow" data-i18n="status.eyebrow">CURRENT STATUS</span>
         <h2 data-i18n="status.title">初代原型 · 从春季走向夏季</h2>
@@ -236,14 +385,13 @@
       <div class="status-stack">
         <div class="status-item"><span class="status-key" data-i18n="status.v">版本</span><span class="status-val">v0.1.0-alpha.1 · Windows x64</span></div>
         <div class="status-item"><span class="status-key" data-i18n="status.lod">当前纪元</span><span class="status-val" data-i18n="status.lodv">春季建 Mission · B0 批准后进入夏季</span></div>
-        <div class="status-item"><span class="status-key" data-i18n="status.shell">已点亮</span><span class="status-val" data-i18n="status.shellv">中控台 + 蓝图 + 世界树 + 金字塔 + 根系 + Agent 会议</span></div>
+        <div class="status-item"><span class="status-key" data-i18n="status.shell">已点亮</span><span class="status-val" data-i18n="status.shellv">中控台 + 蓝图基础 + 三个结构投影 + Agent 会议窄闭环</span></div>
         <div class="status-item"><span class="status-key" data-i18n="status.quality">当前边界</span><span class="status-val" data-i18n="status.qualityv">文本模型 API 对话；暂不开放工具调用与自动改写文件</span></div>
         <div class="status-item"><span class="status-key" data-i18n="status.tech">技术栈</span><span class="status-val">Electron 43 · TypeScript · Vite · SQLite · Local Engine</span></div>
         <div class="status-item"><span class="status-key" data-i18n="status.path">下一步</span><span class="status-val" data-i18n="status.pathv">让戒律、秋收、冬季代谢和上下文胶囊成为可验证闭环</span></div>
       </div>
     </section>
 
-    <!-- ===== 本地优先与安全 ===== -->
     <section class="section" id="local">
       <div class="split">
         <div class="split-copy">
@@ -258,12 +406,11 @@
           </ul>
         </div>
         <div class="split-visual">
-          <img src="assets/illustrations/git-roots-v1.png" alt="项目根系与 Git 历史" data-i18n-alt="alt.local" />
+        <img src="assets/illustrations/git-roots-v1.png" alt="项目根系与 Git 历史" data-i18n-alt="alt.local" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
 
-    <!-- ===== 下载 ===== -->
     <section class="section section-alt" id="download">
       <div class="section-head">
         <span class="eyebrow" data-i18n="start.eyebrow">DOWNLOAD THE FIRST SEED</span>
@@ -290,7 +437,6 @@
       </div>
     </section>
 
-    <!-- ===== 留言板 ===== -->
     <section class="section guestbook-section" id="guestbook">
       <div class="section-head">
         <span class="eyebrow" data-i18n="guestbook.eyebrow">LEAVE A SEED</span>
@@ -329,7 +475,6 @@
 
   </main>
 
-  <!-- ===== 页脚 ===== -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -338,9 +483,9 @@
         <p data-i18n="footer.tagline">本地优先 · 模型无关 · 长程项目伴生</p>
       </div>
       <div class="footer-links">
-        <a href="#features" data-i18n="nav.features">为什么</a>
-        <a href="#domains" data-i18n="nav.domains">领域</a>
+        <a href="#domains" data-i18n="nav.domains">模块</a>
         <a href="#seasons" data-i18n="nav.seasons">四季</a>
+        <a href="#local" data-i18n="nav.local">本地优先</a>
         <a href="#download" data-i18n="nav.download">下载</a>
         <a href="#guestbook" data-i18n="nav.guestbook">留言</a>
         <a href="https://github.com/tmdysx/miracle-harness" target="_blank" rel="noopener noreferrer">GitHub</a>

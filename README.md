@@ -1,6 +1,6 @@
 # 奇迹 Harness 官网（miracleharness.com）
 
-奇迹 Harness 初代官网：中英双语产品页、Windows Alpha 固定下载入口、GitHub 源码入口，以及带防滥用与管理接口的公开留言板。
+奇迹 Harness 初代官网：中英双语的模块广场、十三个 S1 模块设计页、Windows Alpha 固定下载入口、GitHub 源码入口，以及带防滥用与管理接口的公开留言板。
 
 - 源码：<https://github.com/tmdysx/miracle-harness>
 - Windows x64 Alpha：<https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip>
@@ -12,7 +12,7 @@
 
 这是一个 Cloudflare Worker 全栈站点：
 
-- Static Assets 托管 `index.html`、`styles.css`、`app.js` 与 `assets/`。
+- Static Assets 托管首页、十三个构建生成的 `/modules/<slug>/` 设计页、样式、脚本与插画。
 - Worker 提供 `/api/*`、安全响应头和 `www` → 裸域名的 308 重定向。
 - D1 保存公开留言与小时限频计数。
 - Turnstile 使用显式渲染；服务端强制调用 Siteverify，并校验 `success`、`action` 与 `hostname`。
@@ -21,17 +21,30 @@
 miracle-harness-site/
 ├── index.html                  # 中文默认、可切换英文的产品页
 ├── styles.css                  # 深紫框、四季色、世界树/金字塔视觉
-├── app.js                      # I18N、下载入口、留言板与显式 Turnstile
+├── app.js                      # I18N、模块搜索/筛选、留言板与显式 Turnstile
 ├── assets/                     # 品牌图标与现有神话主题插图
 ├── src/index.ts                # Worker、API、安全头与 canonical 重定向
 ├── migrations/0001_guestbook.sql
-├── scripts/build.mjs           # 仅复制四类公开资产到 dist
+├── scripts/module-catalog.mjs  # 十三模块的公开设计事实与页面模板
+├── scripts/build.mjs           # 白名单复制资产并生成十三模块页
 ├── test/                       # Worker/D1/Turnstile/API 与静态安全测试
 ├── wrangler.jsonc
 └── package.json
 ```
 
-`dist/` 的公开面严格限制为 `index.html`、`styles.css`、`app.js`、`assets/`。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产。
+`dist/` 的顶层公开面严格限制为 `index.html`、`styles.css`、`app.js`、`assets/` 与 `modules/`。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产；`modules/` 也只允许十三个已登记 slug 和各自的 `index.html`。
+
+## 十三模块页面
+
+首页把中控台（S0）与 Agent 会议作为跨域工作面单独说明；它们不冒充第十四、十五个 S1 模块。十三个模块按施工治理、空间与记忆、Agent 生态、人类学习分组。每个详情页都明确写出：
+
+- 职责与明确不负责的边界。
+- 输入、输出与核心对象。
+- S/B/T 层级和 LOD 缩放规则。
+- 春、夏、秋、冬四季行为。
+- 上下游依赖、当前事实、候选蓝图、长期愿景、下一阶段与验收条件。
+
+模块文案的单一维护入口是 `scripts/module-catalog.mjs`，避免首页宣传、公开构想和详情页互相漂移。状态措辞必须保持诚实：已实现、窄基础、只读投影、候选蓝图与长期愿景不能混写。
 
 ## 本地开发
 
@@ -89,14 +102,9 @@ npm run check
 - 留言表本身不保存 IP 哈希；哈希只存在限频表，过期窗口由 Worker 清理。
 - `IP_HASH_SALT` 至少 32 字符并作为生产 secret 保存。
 
-## Cloudflare 生产准备（不要跳过）
+## Cloudflare 生产状态与再部署
 
-当前 `wrangler.jsonc` 中的 D1 `database_id` 是不可部署的占位 UUID。首次部署前：
-
-1. 确保 `miracleharness.com` 已作为活动 zone 接入同一个 Cloudflare 账号。
-2. 用 Wrangler v4 创建 `miracle-harness-site-db`，把返回 UUID 写入 `wrangler.jsonc`。
-3. 在 Turnstile 控制台创建 production widget，仅允许 `miracleharness.com`。本地测试继续使用独立 dummy keys，不把 `localhost` 加入生产 hostname allowlist。
-4. 通过可信的独立 Wrangler 可执行文件交互式设置以下 secrets；不要把值写进命令参数、聊天、源码或 `vars`：
+生产环境已经上线：Custom Domains、D1、迁移、Turnstile widget 和 Worker secrets 均已配置。仓库只保存公开 binding/资源 ID，不保存任何 secret 值。后续维护仍须通过可信的 Wrangler 可执行文件交互式设置下列 secrets；不要把值写进命令参数、聊天、源码或 `vars`：
 
 ```text
 TURNSTILE_SITE_KEY
@@ -106,7 +114,7 @@ IP_HASH_SALT          # 随机且至少 32 字符
 ADMIN_API_TOKEN       # 随机且至少 32 字符
 ```
 
-5. 远端应用 D1 migration，再 dry-run，最后才部署：
+发布结构或 API 变更时，先完成远端 migration、全量检查与 dry-run，再部署：
 
 ```powershell
 wrangler d1 migrations apply miracle-harness-site-db --remote
@@ -115,7 +123,7 @@ wrangler deploy --dry-run
 wrangler deploy
 ```
 
-秘密请用 `wrangler secret put <NAME>` 的交互提示录入，不要通过 `echo`、命令参数或项目内脚本传递。
+秘密请用 `wrangler secret put <NAME>` 的交互提示录入，不要通过 `echo`、命令参数或项目内脚本传递。Turnstile widget 可登记正式域名和本地开发域名；生产 Worker 的 hostname allowlist 仍由独立 secret 强制约束，两者不能混为一层校验。
 
 ## 域名与 www 策略
 
@@ -130,7 +138,7 @@ wrangler deploy
 
 - GitHub Release 必须已上传文件名完全一致的 `Miracle-Harness-v0.1.0-alpha.1-win-x64.zip`，否则官网固定下载链接会 404。
 - `npm run check` 全绿。
-- 生产 Turnstile widget 的 hostname 只含 `miracleharness.com`。
+- Turnstile widget 域名和 Worker 生产 hostname allowlist 均符合当前部署策略。
 - D1 远端 migration 已应用。
 - `/api/config` 显示留言板 enabled；提交一次真实 token 成功，再重放同一 token 必须失败。
 - 用错误管理员 Bearer token 验证接口只返回 404。
