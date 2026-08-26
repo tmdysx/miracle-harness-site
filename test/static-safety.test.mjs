@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { test } from "node:test";
 import "./module-pages.test.mjs";
 
@@ -18,6 +18,23 @@ test("the public site contains the fixed source and Windows alpha download links
   );
   assert.match(html, /Alpha/u);
   assert.match(html, /Windows x64/u);
+});
+
+test("the concept film is embedded above the thirteen modules without a download link", async () => {
+  const [html, video, worker] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    stat(new URL("assets/video/miracle-harness-concept-v1.mp4", root)),
+    readFile(new URL("src/index.ts", root), "utf8"),
+  ]);
+  const filmIndex = html.indexOf('id="film"');
+  const modulesIndex = html.indexOf('id="domains"');
+  assert.ok(filmIndex > 0 && modulesIndex > filmIndex);
+  assert.match(html, /<source src="assets\/video\/miracle-harness-concept-v1\.mp4" type="video\/mp4"/u);
+  assert.match(html, /controlslist="nodownload noplaybackrate noremoteplayback"/u);
+  assert.doesNotMatch(html, /<a[^>]+href="[^"]*miracle-harness-concept-v1\.mp4/u);
+  assert.ok(video.isFile());
+  assert.ok(video.size > 0 && video.size < 5 * 1024 * 1024);
+  assert.match(worker, /media-src 'self'/u);
 });
 
 test("guestbook rendering avoids HTML injection sinks", async () => {

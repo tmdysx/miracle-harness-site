@@ -112,6 +112,11 @@ const I18N = {
     "workspace.meeting.desc": "把模型接进 Mission，而不是把 Mission 困在聊天框里。",
     "workspace.meeting.in": "输入",
     "workspace.meeting.out": "输出",
+    "promo.eyebrow": "A TEN-SECOND WORLD",
+    "promo.title": "十秒，看见一个长程项目如何生长",
+    "promo.lead": "世界树承载对话，金字塔组织施工层级，Agent 会议汇集协作；这些空间最终服从同一份 Mission、蓝图与戒律。",
+    "promo.fallback": "你的浏览器暂时无法播放这支概念短片。",
+    "promo.note": "默认静音循环播放，可在播放器中开启声音；宣传片仅用于观看，不提供下载入口。",
     "domains.blueprint": "模块总图",
     "status.partial": "部分已实现",
     "status.candidate": "候选蓝图",
@@ -320,6 +325,11 @@ const I18N = {
     "workspace.meeting.desc": "Connect a model to the Mission instead of trapping the Mission in a chat box.",
     "workspace.meeting.in": "Input",
     "workspace.meeting.out": "Output",
+    "promo.eyebrow": "A TEN-SECOND WORLD",
+    "promo.title": "See a long-running project grow in ten seconds",
+    "promo.lead": "The World Tree carries conversations, the Pyramid structures construction, and Agent Meeting gathers collaboration — all governed by one Mission, Blueprint, and set of Laws.",
+    "promo.fallback": "Your browser cannot play this concept film right now.",
+    "promo.note": "The film loops silently by default. Turn on sound in the player; no download link is provided.",
     "domains.blueprint": "Module map",
     "status.partial": "Partially implemented",
     "status.candidate": "Candidate blueprint",
@@ -545,6 +555,15 @@ const I18N = {
     });
 
     applyModuleFilter();
+  }
+
+  function initializePromoVideo() {
+    var video = document.getElementById("promo-video");
+    if (!video || typeof window.matchMedia !== "function") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      video.removeAttribute("autoplay");
+      video.pause();
+    }
   }
 
   function setGuestbookStatus(key, state) {
@@ -823,6 +842,7 @@ const I18N = {
   }
 
   initializeModuleExplorer();
+  initializePromoVideo();
   apply(currentLang());
   initializeGuestbook();
 })();

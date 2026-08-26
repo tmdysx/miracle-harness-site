@@ -196,6 +196,20 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .workspace-io dd { margin: 0; color: #64758a; font-size: 11.5px; line-height: 1.5; overflow-wrap: anywhere; }
 .workspace-card-primary .workspace-io dd { color: #dceef9; }
 
+/* Concept film */
+.promo-section { padding-top: 78px; padding-bottom: 104px; }
+.promo-head { max-width: 760px; margin-bottom: 34px; }
+.promo-film { max-width: 1020px; margin: 0 auto; }
+.promo-frame {
+  padding: 10px; overflow: hidden; border: 1px solid rgba(40, 127, 192, .23);
+  border-radius: 28px; background: #fff; box-shadow: 0 24px 58px rgba(32, 83, 126, .14);
+}
+.promo-video {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border-radius: 20px; background: #102d49;
+}
+.promo-film figcaption { margin: 15px 16px 0; color: #75899d; text-align: center; font-size: 11.5px; line-height: 1.65; }
+
 /* Module directory */
 .module-directory { padding-top: 92px; padding-bottom: 100px; }
 .module-directory > * { width: min(100%, var(--content)); margin-left: auto; margin-right: auto; }
@@ -474,6 +488,11 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
   .section-head h2, .split-copy h2 { font-size: 27px; }
   .workspace-grid, .workspace-io { grid-template-columns: 1fr; }
   .workspace-card { padding: 20px; }
+  .promo-section { padding-top: 56px; padding-bottom: 70px; }
+  .promo-head { margin-bottom: 24px; }
+  .promo-frame { padding: 5px; border-radius: 20px; }
+  .promo-video { border-radius: 15px; }
+  .promo-film figcaption { margin-inline: 8px; }
   .module-directory-head { gap: 17px; }
   .module-toolbar { align-items: flex-start; flex-direction: column; }
   .module-filters { flex-wrap: nowrap; width: 100%; padding-bottom: 5px; overflow-x: auto; }
