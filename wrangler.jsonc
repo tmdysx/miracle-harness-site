@@ -27,7 +27,7 @@
     {
       "binding": "DB",
       "database_name": "miracle-harness-site-db",
-      "database_id": "00000000-0000-0000-0000-000000000001",
+      "database_id": "8878daf0-60f2-412a-9133-3c5044d16788",
       "migrations_dir": "migrations"
     }
   ],
