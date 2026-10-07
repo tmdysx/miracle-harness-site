@@ -515,6 +515,13 @@ function canonicalRedirect(request: Request): Response | null {
   return Response.redirect(url.toString(), 308);
 }
 
+// The retired module design pages (/modules and /modules/*) were removed when
+// the site switched to the research workbench; send old links to the homepage.
+function retiredModulesRedirect(url: URL): Response | null {
+  if (url.pathname !== "/modules" && !url.pathname.startsWith("/modules/")) return null;
+  return Response.redirect(`${url.origin}/`, 301);
+}
+
 export default {
   async fetch(request: Request, env: RuntimeEnv, ctx: ExecutionContext): Promise<Response> {
     const redirect = canonicalRedirect(request);
@@ -529,6 +536,9 @@ export default {
         response.headers.set("X-Request-ID", requestId);
         return response;
       }
+
+      const retiredRedirect = retiredModulesRedirect(url);
+      if (retiredRedirect) return retiredRedirect;
 
       const assetResponse = await env.ASSETS.fetch(request);
       return withStaticSecurityHeaders(assetResponse);

@@ -1,58 +1,53 @@
-# 奇迹 Harness 官网（miracleharness.com）
+# MiracleHarness 官网（miracleharness.com）
 
-奇迹 Harness 初代官网：中英双语的模块广场、十三个 S1 模块设计页、Windows Alpha 固定下载入口、GitHub 源码入口，以及带防滥用与管理接口的公开留言板。
+“Agent 科研自动工作台 · MiracleHarness”（英文 Agent Research Workbench · MiracleHarness）的中英双语官网：产品介绍、科研全流程、Agent 接入方式、诚实的当前状态、许可与商业授权说明、Windows 发行包下载入口，以及带防滥用与管理接口的公开留言板。
 
-- 源码：<https://github.com/tmdysx/miracle-harness>
-- Windows x64 Alpha：<https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip>
-- 站点代码采用 [MIT License](LICENSE)；品牌名、神鸟图标和插画不随
-  MIT 自动授权，使用边界见 [品牌政策](TRADEMARKS.md) 与
-  [Notice](NOTICE.md)。桌面产品以其仓库中的许可与第三方声明为准。
+- 产品仓库：<https://github.com/tmdysx/agent-research-workbench>
+- Windows 发行包（固定直链，指向最新 Release 的附件）：<https://github.com/tmdysx/agent-research-workbench/releases/latest/download/MiracleHarness2.zip>
+- 产品许可：原创部分 PolyForm Noncommercial 1.0.0，非商用免费；商用（含商业研究）需作者书面授权，联系 3129746403@qq.com。源码公开但不是 OSI 开源；第三方部分保持各自许可。以产品仓库里的 `LICENSE`、`NOTICE` 和 `第三方许可证.md` 为准。
+- 本站代码采用 [MIT License](LICENSE)；品牌名、凤凰标志和插画不随 MIT 自动授权，见 [品牌政策](TRADEMARKS.md) 与 [Notice](NOTICE.md)。
 
 ## 架构
 
 这是一个 Cloudflare Worker 全栈站点：
 
-- Static Assets 托管首页、十三个构建生成的 `/modules/<slug>/` 设计页、样式、脚本与插画。
-- Worker 提供 `/api/*`、安全响应头和 `www` → 裸域名的 308 重定向。
+- Static Assets 托管单页首页、样式、脚本与图片（全部在站内 `assets/`，CSP 只允许 `'self'`）。
+- Worker 提供 `/api/*`、安全响应头、`www` → 裸域名的 308 重定向，以及旧模块页 `/modules`、`/modules/*` → `/` 的 301 重定向。
 - D1 保存公开留言与小时限频计数。
 - Turnstile 使用显式渲染；服务端强制调用 Siteverify，并校验 `success`、`action` 与 `hostname`。
 
 ```
 miracle-harness-site/
-├── index.html                  # 中文默认、可切换英文的产品页
-├── styles.css                  # 深紫框、四季色、世界树/金字塔视觉
-├── app.js                      # I18N、模块搜索/筛选、留言板与显式 Turnstile
-├── assets/                     # 品牌图标与现有神话主题插图
-├── src/index.ts                # Worker、API、安全头与 canonical 重定向
+├── index.html                  # 中文默认、可切换英文的单页产品介绍
+├── styles.css                  # 设计变量 + 玉青 / 青铜金点缀
+├── app.js                      # I18N 字典、留言板与显式 Turnstile
+├── assets/
+│   ├── brand/                  # 凤凰标志小图（favicon/logo）与 Open Graph 封面
+│   └── concepts/               # 由产品仓库 品牌/ 转换的 WebP 概念插画（AI 生成，非界面截图）
+├── src/index.ts                # Worker、API、安全头、canonical 与旧页面重定向
 ├── migrations/0001_guestbook.sql
-├── scripts/module-catalog.mjs  # 十三模块的公开设计事实与页面模板
-├── scripts/build.mjs           # 白名单复制资产并生成十三模块页
+├── scripts/build.mjs           # 只按白名单复制公开文件到 dist/
 ├── test/                       # Worker/D1/Turnstile/API 与静态安全测试
+├── .github/workflows/deploy.yml
 ├── wrangler.jsonc
 └── package.json
 ```
 
-`dist/` 的顶层公开面严格限制为 `index.html`、`styles.css`、`app.js`、`assets/` 与 `modules/`。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产；`modules/` 也只允许十三个已登记 slug 和各自的 `index.html`。
+`dist/` 的顶层公开面严格限制为 `index.html`、`styles.css`、`app.js` 与 `assets/`；构建脚本在输出不完全等于白名单时直接失败。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产。
 
-## 十三模块页面
+## 文案原则
 
-首页把中控台（S0）与 Agent 会议作为跨域工作面单独说明；它们不冒充第十四、十五个 S1 模块。十三个模块按施工治理、空间与记忆、Agent 生态、人类学习分组。每个详情页都明确写出：
-
-- 职责与明确不负责的边界。
-- 输入、输出与核心对象。
-- S/B/T 层级和 LOD 缩放规则。
-- 春、夏、秋、冬四季行为。
-- 上下游依赖、当前事实、候选蓝图、长期愿景、下一阶段与验收条件。
-
-模块文案的单一维护入口是 `scripts/module-catalog.mjs`，避免首页宣传、公开构想和详情页互相漂移。状态措辞必须保持诚实：已实现、窄基础、只读投影、候选蓝图与长期愿景不能混写。
+- 所有对外文案只写已核实的产品事实：Windows 优先、早期版本、平台本身不调用模型、“员工”自动运行只支持本机 Codex CLI、一键接入未做、真实科研任务与第二台电脑安装未验证等，都必须如实保留。
+- 不称产品“开源”；写“源码公开、非商用免费、商用需书面授权”。
+- `assets/concepts/` 的图片是 AI 生成的概念插画，页面上必须标明“非截图”。以后有真实界面截图再替换。
+- 新增文案一律加 `data-i18n`（或 `data-i18n-alt` / `data-i18n-placeholder` / `data-i18n-aria`），并在 `app.js` 的 `I18N.zh` 与 `I18N.en` 中同时加 key；静态测试会检查两边 key 完全一致且覆盖页面所有 key。
 
 ## 本地开发
 
 需要 Node.js 22+。本地测试使用 Cloudflare 官方 dummy keys；生产配置会主动拒绝这些 dummy keys。官方 dummy Siteverify 响应不会携带真实 widget 的 action/hostname，因此仅在 `ENVIRONMENT` 不是 `production` 且 sitekey/secret 都属于官方 dummy 集合时，测试分支只要求 `success=true`；真实生产 key 始终强制比较 `action=guestbook_submit` 和 `hostname=miracleharness.com`。
 
 ```powershell
-Set-Location D:\MiracleHarness\miracle-harness-site
-npm install
+npm ci
 Copy-Item .dev.vars.example .dev.vars
 npm run cf:typegen
 npm run db:migrate:local
@@ -68,6 +63,31 @@ npm run check
 ```
 
 这会依次生成绑定类型、运行严格 TypeScript 检查、执行 Worker 与静态安全测试、构建公开资产，并完成 Wrangler dry-run。
+
+## 自动发布（GitHub Actions）
+
+`.github/workflows/deploy.yml`：
+
+- 触发：`pull_request`、推送到 `main`、手动 `workflow_dispatch`。
+- 每次都运行：Node 22 → `npm ci` → `cf:typegen` → `typecheck` → `npm test` → `build` → `deploy:dry-run`（与 `npm run check` 同序）。
+- 只有推送到 `main` 时，才用 `cloudflare/wrangler-action`（固定在 v3.15.0 的提交 SHA）先执行 `d1 migrations apply miracle-harness-site-db --remote`，再 `deploy`。PR 与手动运行只做检查，不部署。
+- `permissions: contents: read`；推送 `main` 的运行共用一个并发组且不会被中途取消，避免两次部署重叠。
+
+需要在 GitHub 仓库 Settings → Secrets and variables → Actions 里添加两个 repository secrets：
+
+| Secret | 内容 |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API Token（见下） |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare 账号 ID（Dashboard 右侧栏或 Workers 概览页可见） |
+
+Cloudflare API Token 建议在 Dashboard → My Profile → API Tokens 用 “Edit Cloudflare Workers” 模板创建，并：
+
+- 额外加上 **Account · D1 · Edit**（远端迁移需要）。
+- Account Resources 只选本站所在账号；Zone Resources 只选 `miracleharness.com`（模板里的 Zone · Workers Routes · Edit 用于 Custom Domains）。
+- 如果部署时报 Custom Domain 相关的权限错误，再按 Cloudflare 提示补充对应的 Zone 权限（例如 DNS · Edit）。
+- 设置合理的过期时间，只保存在 GitHub Secrets 里，不要写进仓库、命令行参数或聊天。
+
+Worker 运行时 secrets（下一节）已在生产环境设置过，`wrangler deploy` 不会改动或清空它们；CI 不需要也不应该接触这些值。
 
 ## 留言板 API
 
@@ -102,9 +122,9 @@ npm run check
 - 留言表本身不保存 IP 哈希；哈希只存在限频表，过期窗口由 Worker 清理。
 - `IP_HASH_SALT` 至少 32 字符并作为生产 secret 保存。
 
-## Cloudflare 生产状态与再部署
+## Cloudflare 生产配置
 
-生产环境已经上线：Custom Domains、D1、迁移、Turnstile widget 和 Worker secrets 均已配置。仓库只保存公开 binding/资源 ID，不保存任何 secret 值。后续维护仍须通过可信的 Wrangler 可执行文件交互式设置下列 secrets；不要把值写进命令参数、聊天、源码或 `vars`：
+生产环境已经上线：Custom Domains、D1、迁移、Turnstile widget 和 Worker secrets 均已配置。仓库只保存公开 binding/资源 ID，不保存任何 secret 值。维护 secrets 时须通过可信的 Wrangler 交互式录入；不要把值写进命令参数、聊天、源码或 `vars`：
 
 ```text
 TURNSTILE_SITE_KEY
@@ -114,29 +134,29 @@ IP_HASH_SALT          # 随机且至少 32 字符
 ADMIN_API_TOKEN       # 随机且至少 32 字符
 ```
 
-发布结构或 API 变更时，先完成远端 migration、全量检查与 dry-run，再部署：
+日常发布走上面的 GitHub Actions。需要手动发布时，顺序相同：
 
 ```powershell
+npm run check
 wrangler d1 migrations apply miracle-harness-site-db --remote
-npm run build
-wrangler deploy --dry-run
 wrangler deploy
 ```
 
-秘密请用 `wrangler secret put <NAME>` 的交互提示录入，不要通过 `echo`、命令参数或项目内脚本传递。Turnstile widget 可登记正式域名和本地开发域名；生产 Worker 的 hostname allowlist 仍由独立 secret 强制约束，两者不能混为一层校验。
+秘密请用 `wrangler secret put <NAME>` 的交互提示录入。Turnstile widget 可登记正式域名和本地开发域名；生产 Worker 的 hostname allowlist 仍由独立 secret 强制约束，两者不能混为一层校验。
 
-## 域名与 www 策略
+## 域名与重定向
 
 `wrangler.jsonc` 已声明两个 Custom Domains：
 
 - `miracleharness.com`：唯一 canonical 站点。
 - `www.miracleharness.com`：仍指向同一 Worker，但 Worker 对所有路径与查询参数做永久 `308` 重定向到裸域名。
 
-这要求域名的 Cloudflare zone 处于激活状态。Custom Domain 会由 Cloudflare 创建相应 DNS 记录与证书；不要同时保留指向其他源站的同名 A/AAAA/CNAME。实际账号授权、DNS 变更、D1 创建、secret 写入和部署必须由明确的发布步骤完成。
+旧版站点的十三个模块设计页已下线：`/modules` 与 `/modules/*` 由 Worker 在读取静态资源之前返回 `301` 到 `/`。
 
 ## 发布前检查
 
-- GitHub Release 必须已上传文件名完全一致的 `Miracle-Harness-v0.1.0-alpha.1-win-x64.zip`，否则官网固定下载链接会 404。
+- 产品仓库的 Release 附件名必须保持 `MiracleHarness2.zip`，否则官网固定下载链接会 404。
+- 页面上的“使用说明”“LICENSE / NOTICE / 第三方许可证”链接指向产品仓库 `main` 分支；产品源码合并进 `main` 之前这些链接会 404。
 - `npm run check` 全绿。
 - Turnstile widget 域名和 Worker 生产 hostname allowlist 均符合当前部署策略。
 - D1 远端 migration 已应用。
@@ -145,10 +165,10 @@ wrangler deploy
 
 ## 官方依据
 
-- Cloudflare Agent Setup：<https://developers.cloudflare.com/agent-setup/prompt.md>
 - Workers Best Practices：<https://developers.cloudflare.com/workers/best-practices/workers-best-practices/>
 - Workers Static Assets：<https://developers.cloudflare.com/workers/static-assets/binding/>
 - D1 migrations：<https://developers.cloudflare.com/d1/reference/migrations/>
 - Turnstile 服务端验证：<https://developers.cloudflare.com/turnstile/get-started/server-side-validation/>
 - Turnstile 官方 dummy keys：<https://developers.cloudflare.com/turnstile/troubleshooting/testing/>
 - Workers Custom Domains：<https://developers.cloudflare.com/workers/configuration/routing/custom-domains/>
+- GitHub Actions 部署 Workers：<https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/>
