@@ -1,40 +1,123 @@
 import assert from "node:assert/strict";
-import { readFile, stat } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import { test } from "node:test";
-import "./module-pages.test.mjs";
 
 const root = new URL("../", import.meta.url);
+const REPO_URL = "https://github.com/tmdysx/agent-research-workbench";
+const RELEASE_ZIP_URL =
+  "https://github.com/tmdysx/agent-research-workbench/releases/latest/download/MiracleHarness2.zip";
+const LICENSE_EMAIL = "3129746403@qq.com";
 
-test("the public site contains the fixed source and Windows alpha download links", async () => {
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+}
+
+test("the public site links the research workbench repository and Windows release ZIP", async () => {
   const html = await readFile(new URL("index.html", root), "utf8");
-  assert.match(html, /https:\/\/github\.com\/tmdysx\/miracle-harness/u);
-  assert.match(
-    html,
-    /https:\/\/github\.com\/tmdysx\/miracle-harness\/blob\/main\/MIRACLE_HARNESS_VISION\.md/u,
-  );
-  assert.match(
-    html,
-    /https:\/\/github\.com\/tmdysx\/miracle-harness\/releases\/latest\/download\/Miracle-Harness-v0\.1\.0-alpha\.1-win-x64\.zip/u,
-  );
-  assert.match(html, /Alpha/u);
-  assert.match(html, /Windows x64/u);
+  assert.match(html, new RegExp(`href="${escapeRegExp(REPO_URL)}"`, "u"));
+  assert.match(html, new RegExp(`href="${escapeRegExp(RELEASE_ZIP_URL)}"`, "u"));
+  assert.match(html, /Agent 科研自动工作台/u);
+  assert.match(html, /MiracleHarness/u);
+  assert.match(html, /Windows/u);
 });
 
-test("the concept film is embedded above the thirteen modules without a download link", async () => {
-  const [html, video, worker] = await Promise.all([
+test("the page states the noncommercial license and commercial-licensing contact", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  assert.match(html, /PolyForm Noncommercial 1\.0\.0/u);
+  assert.match(html, new RegExp(`href="mailto:${escapeRegExp(LICENSE_EMAIL)}"`, "u"));
+  assert.match(html, /不是 OSI/u);
+});
+
+test("the page and the English copy never call this project open source", async () => {
+  const [html, script] = await Promise.all([
     readFile(new URL("index.html", root), "utf8"),
-    stat(new URL("assets/video/miracle-harness-concept-v1.mp4", root)),
-    readFile(new URL("src/index.ts", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
   ]);
-  const filmIndex = html.indexOf('id="film"');
-  const modulesIndex = html.indexOf('id="domains"');
-  assert.ok(filmIndex > 0 && modulesIndex > filmIndex);
-  assert.match(html, /<source src="assets\/video\/miracle-harness-concept-v1\.mp4" type="video\/mp4"/u);
-  assert.match(html, /controlslist="nodownload noplaybackrate noremoteplayback"/u);
-  assert.doesNotMatch(html, /<a[^>]+href="[^"]*miracle-harness-concept-v1\.mp4/u);
-  assert.ok(video.isFile());
-  assert.ok(video.size > 0 && video.size < 5 * 1024 * 1024);
-  assert.match(worker, /media-src 'self'/u);
+  assert.match(script, /not an OSI-approved open-source license/u);
+  const openSourceMention = /开源|open[\s-]?source/iu;
+  // Only negated statements such as "不是 OSI 认可的开源许可证" or
+  // "not an OSI-approved open-source license" may mention open source.
+  const negation = /不是|并非|不属于|\bnot\b|\bisn't\b/iu;
+  for (const [name, source] of [["index.html", html], ["app.js", script]]) {
+    assert.doesNotMatch(
+      source,
+      /开源项目|开源软件|完全开源|是开源的|(?:is|are|fully|an?) open[\s-]?source|open[\s-]?source (?:project|software|tool|app)/iu,
+      `${name} must not call the project open source`,
+    );
+    const sentences = source.split(/[。！？!?\n]|\.(?:\s|"|$)/u);
+    for (const sentence of sentences) {
+      if (openSourceMention.test(sentence)) {
+        assert.match(sentence, negation, `${name}: open-source mention must be negated: ${sentence.trim()}`);
+      }
+    }
+  }
+});
+
+test("the Worker keeps the exact static security headers", async () => {
+  const worker = await readFile(new URL("src/index.ts", root), "utf8");
+  const expectedCsp =
+    "default-src 'self'; base-uri 'self'; connect-src 'self' https://challenges.cloudflare.com; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src https://challenges.cloudflare.com; img-src 'self' data:; media-src 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; upgrade-insecure-requests";
+  const cspValues = Array.from(
+    worker.matchAll(/headers\.set\(\s*"Content-Security-Policy",\s*"([^"]*)"/gu),
+    (match) => match[1],
+  );
+  assert.deepEqual(cspValues, [expectedCsp]);
+  assert.match(worker, /headers\.set\("Strict-Transport-Security", "max-age=[1-9]\d*[^"]*"\)/u);
+  assert.match(worker, /headers\.set\("X-Frame-Options", "DENY"\)/u);
+  assert.match(worker, /headers\.set\("X-Content-Type-Options", "nosniff"\)/u);
+});
+
+test("the retired desktop prototype is no longer linked or embedded", async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  for (const source of [html, script]) {
+    assert.doesNotMatch(source, /github\.com\/tmdysx\/miracle-harness(?![-\w])/u);
+    assert.doesNotMatch(source, /Miracle-Harness-v0\.1\.0/u);
+    assert.doesNotMatch(source, /href="\/modules\//u);
+    assert.doesNotMatch(source, /<video\b/u);
+  }
+});
+
+test("every local image and icon referenced by the page exists in assets/", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  const references = Array.from(
+    html.matchAll(/(?:src|href)="(assets\/[^"]+)"/gu),
+    (match) => match[1],
+  );
+  assert.ok(references.length > 0);
+  for (const reference of references) {
+    const info = await stat(new URL(reference, root));
+    assert.ok(info.isFile(), `${reference} should be a file`);
+    assert.ok(info.size > 0 && info.size < 1024 * 1024, `${reference} should stay small`);
+  }
+
+  const images = Array.from(html.matchAll(/<img\b[^>]*>/gu), (match) => match[0]);
+  for (const image of images) {
+    assert.match(image, /\salt="[^"]+"/u, `missing alt: ${image}`);
+    assert.match(image, /\swidth="\d+"/u, `missing width: ${image}`);
+    assert.match(image, /\sheight="\d+"/u, `missing height: ${image}`);
+  }
+});
+
+test("AI concept illustrations live under assets/concepts/, not a screenshots folder", async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const conceptImages = Array.from(
+    html.matchAll(/<img\b(?=[^>]*\salt="AI 生成的概念插画)[^>]*\ssrc="([^"]+)"/gu),
+    (match) => match[1],
+  );
+  assert.ok(conceptImages.length > 0);
+  for (const image of conceptImages) {
+    assert.match(image, /^assets\/concepts\//u, `${image} should live under assets/concepts/`);
+  }
+  for (const source of [html, script]) {
+    assert.doesNotMatch(source, /assets\/screens\//u);
+  }
+  await assert.rejects(stat(new URL("assets/screens/", root)), { code: "ENOENT" });
 });
 
 test("guestbook rendering avoids HTML injection sinks", async () => {
@@ -57,7 +140,7 @@ test("Chinese and English dictionaries cover every page key", async () => {
   assert.deepEqual(zhKeys, enKeys);
 
   const pageKeys = Array.from(
-    html.matchAll(/data-i18n(?:-alt|-placeholder)?="([^"]+)"/gu),
+    html.matchAll(/data-i18n(?:-alt|-placeholder|-aria)?="([^"]+)"/gu),
     (match) => match[1],
   );
   for (const key of pageKeys) {
@@ -83,11 +166,28 @@ test("the build has an explicit public allowlist", async () => {
   const buildScript = await readFile(new URL("scripts/build.mjs", root), "utf8");
   assert.match(
     buildScript,
-    /const publicAllowlist = \["index\.html", "styles\.css", "app\.js", "assets", "modules"\]/u,
+    /const publicAllowlist = \["index\.html", "styles\.css", "app\.js", "assets"\]/u,
   );
   assert.match(
     buildScript,
     /const copiedEntries = \["index\.html", "styles\.css", "app\.js", "assets"\]/u,
   );
+  assert.match(buildScript, /Unexpected static build output/u);
   assert.doesNotMatch(buildScript, /cp\(projectRoot,\s*distDir/u);
+});
+
+test("the static asset tree contains only web media", async () => {
+  const allowed = /\.(?:png|jpe?g|webp|svg)$/u;
+  async function walk(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+      const child = new URL(`${entry.name}${entry.isDirectory() ? "/" : ""}`, directory);
+      if (entry.isDirectory()) {
+        await walk(child);
+      } else {
+        assert.match(entry.name, allowed, `unexpected asset: ${child.pathname}`);
+      }
+    }
+  }
+  await walk(new URL("assets/", root));
 });

@@ -238,4 +238,47 @@ describe("domain behavior", () => {
     expect(response.status).toBe(308);
     expect(response.headers.get("Location")).toBe("https://miracleharness.com/path?q=1");
   });
+
+  it.each([
+    "/modules",
+    "/modules/",
+    "/modules/blueprint/",
+    "/modules/x?ref=old",
+  ])("permanently redirects the retired module page %s to the homepage", async (path) => {
+    const response = await callWorker(
+      new IncomingRequest(`https://miracleharness.com${path}`),
+    );
+    expect(response.status).toBe(301);
+    expect(response.headers.get("Location")).toBe("https://miracleharness.com/");
+  });
+
+  it("wraps every static asset response in the security headers", async () => {
+    const response = await callWorkerWithEnv(
+      new IncomingRequest("https://miracleharness.com/"),
+      { ...env, ASSETS: { fetch: async () => new Response("ok") } } as unknown as Cloudflare.Env,
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Security-Policy")).toBe(
+      "default-src 'self'; base-uri 'self'; connect-src 'self' https://challenges.cloudflare.com; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src https://challenges.cloudflare.com; img-src 'self' data:; media-src 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; upgrade-insecure-requests",
+    );
+    expect(response.headers.get("Strict-Transport-Security")).toBe("max-age=31536000; includeSubDomains");
+    expect(response.headers.get("X-Frame-Options")).toBe("DENY");
+    expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
+    expect(response.headers.get("Referrer-Policy")).toBe("strict-origin-when-cross-origin");
+    expect(response.headers.get("Permissions-Policy")).toBe(
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    );
+  });
+
+  it("does not treat lookalike paths or the API as retired module pages", async () => {
+    const lookalike = await callWorker(
+      new IncomingRequest("https://miracleharness.com/modules-archive"),
+    );
+    expect(lookalike.status).not.toBe(301);
+
+    const health = await callWorker(
+      new IncomingRequest("https://miracleharness.com/api/health"),
+    );
+    expect(health.status).toBe(200);
+  });
 });
