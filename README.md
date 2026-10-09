@@ -29,7 +29,7 @@ miracle-harness-site/
 ├── archive/v1/                 # 第一版官网（2026-08）原样存档，发布到 /v1/
 ├── scripts/build.mjs           # 只按白名单复制公开文件到 dist/
 ├── test/                       # Worker/D1/Turnstile/API 与静态安全测试
-├── .github/workflows/deploy.yml
+├── .github/workflows/deploy.yml  # 检查（发布由 Cloudflare Workers Builds 完成）
 ├── wrangler.jsonc
 └── package.json
 ```
@@ -65,28 +65,22 @@ npm run check
 
 这会依次生成绑定类型、运行严格 TypeScript 检查、执行 Worker 与静态安全测试、构建公开资产，并完成 Wrangler dry-run。
 
-## 自动发布（GitHub Actions）
+## 自动发布（Cloudflare Workers Builds）
 
-`.github/workflows/deploy.yml`：
+发布由 Cloudflare Workers Builds 完成：Worker `miracle-harness-site` 已在 Cloudflare 控制台连接本仓库，`main` 每次有新提交就自动构建并发布到 miracleharness.com。不需要在 GitHub 里保存任何 Cloudflare 密钥。
+
+Cloudflare 构建设置（Workers & Pages → `miracle-harness-site` → Settings → Build）：
+
+- 仓库 `tmdysx/miracle-harness-site`，生产分支 `main`。
+- 构建命令 `npm run build`，部署命令 `npx wrangler deploy`。
+- 只会构建连接之后推送的新提交；要重新发布当前版本，在该 Worker 的 Deployments / Builds 页手动触发一次。
+- 以后新增 `migrations/` 里的 D1 迁移时，把部署命令改为 `npx wrangler d1 migrations apply miracle-harness-site-db --remote && npx wrangler deploy`，或在本机手动执行一次迁移再合并。
+
+`.github/workflows/deploy.yml`（名为 Check）只做检查，不发布：
 
 - 触发：`pull_request`、推送到 `main`、手动 `workflow_dispatch`。
-- 每次都运行：Node 22 → `npm ci` → `cf:typegen` → `typecheck` → `npm test` → `build` → `deploy:dry-run`（与 `npm run check` 同序）。
-- 只有推送到 `main` 时，才用 `cloudflare/wrangler-action`（固定在 v3.15.0 的提交 SHA）先执行 `d1 migrations apply miracle-harness-site-db --remote`，再 `deploy`。PR 与手动运行只做检查，不部署。
-- `permissions: contents: read`；推送 `main` 的运行共用一个并发组且不会被中途取消，避免两次部署重叠。
-
-需要在 GitHub 仓库 Settings → Secrets and variables → Actions 里添加两个 repository secrets：
-
-| Secret | 内容 |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare API Token（见下） |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare 账号 ID（Dashboard 右侧栏或 Workers 概览页可见） |
-
-Cloudflare API Token 建议在 Dashboard → My Profile → API Tokens 用 “Edit Cloudflare Workers” 模板创建，并：
-
-- 额外加上 **Account · D1 · Edit**（远端迁移需要）。
-- Account Resources 只选本站所在账号；Zone Resources 只选 `miracleharness.com`（模板里的 Zone · Workers Routes · Edit 用于 Custom Domains）。
-- 如果部署时报 Custom Domain 相关的权限错误，再按 Cloudflare 提示补充对应的 Zone 权限（例如 DNS · Edit）。
-- 设置合理的过期时间，只保存在 GitHub Secrets 里，不要写进仓库、命令行参数或聊天。
+- 运行：Node 22 → `npm ci` → `cf:typegen` → `typecheck` → `npm test` → `build` → `deploy:dry-run`（与 `npm run check` 同序）。
+- `permissions: contents: read`；同一分支有新推送时取消旧的检查。
 
 Worker 运行时 secrets（下一节）已在生产环境设置过，`wrangler deploy` 不会改动或清空它们；CI 不需要也不应该接触这些值。
 

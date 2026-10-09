@@ -1,5 +1,8 @@
-name: Check and deploy
+name: Check
 
+# Publishing is done by Cloudflare Workers Builds, which is connected to this
+# repository and deploys every push to main. This workflow only checks pull
+# requests and pushes, so it needs no Cloudflare secrets.
 on:
   pull_request:
   push:
@@ -9,15 +12,12 @@ on:
 permissions:
   contents: read
 
-# Pushes to main share one production group and are never cancelled midway, so
-# two deploys cannot overlap. Pull requests and manual runs only run checks and
-# cancel superseded runs for the same ref.
 concurrency:
-  group: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production-deploy' || format('check-{0}', github.ref) }}
-  cancel-in-progress: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  check-and-deploy:
+  check:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -50,19 +50,3 @@ jobs:
 
       - name: Wrangler dry-run
         run: npm run deploy:dry-run
-
-      - name: Apply remote D1 migrations
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 migrations apply miracle-harness-site-db --remote
-
-      - name: Deploy to Cloudflare Workers
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
