@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="扎进本地仓库、Git、物理文件与依赖，提供可解释的搜索和恢复引用，但默认不替用户整理或删除文件。">
+  <title>根系 · MH.ROOT · Miracle Harness</title>
+  <link rel="icon" href="/v1/assets/brand/miracle-bird-mark-v1.png">
+  <link rel="stylesheet" href="/v1/styles.css">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/v1/archive-banner.css">
+</head>
+<body class="module-page">
+  <div class="v1-archive-banner" role="note"><span class="v1-archive-text">历史存档 · 这是 MiracleHarness 的第一版官网（2026-08，「奇迹 Harness」桌面原型）。<span class="v1-archive-en"> Archived: the first MiracleHarness website (Aug 2026).</span></span><a class="v1-archive-link" href="/">看现在的版本 · Current site →</a></div>
+  <header class="module-page-header">
+    <div class="module-page-header-inner">
+      <a class="module-page-brand" href="/v1/" aria-label="返回 Miracle Harness 首页">
+        <img class="module-page-brand-mark" src="/v1/assets/brand/miracle-bird-mark-v1.png" alt="Miracle Harness 品牌图标">
+        <span class="module-page-brand-copy"><strong class="module-page-brand-name">Miracle Harness</strong><span class="module-page-brand-kicker">十三领域手册</span></span>
+      </a>
+      <nav class="module-page-actions" aria-label="页面操作">
+        <a class="module-page-button module-page-button-secondary" href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md">GitHub 完整构想</a>
+        <a class="module-page-button" href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip">下载 Windows Alpha</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="module-page-main">
+    <section class="module-page-hero">
+      <div class="module-page-hero-copy">
+        <p class="module-page-eyebrow">S1 领域 · MH.ROOT</p>
+        <h1 class="module-page-title">根系</h1>
+        <p class="module-page-subtitle">Repository Explorer &amp; Git</p>
+        <p class="module-page-lede">扎进本地仓库、Git、物理文件与依赖，提供可解释的搜索和恢复引用，但默认不替用户整理或删除文件。</p>
+      </div>
+      <figure class="module-page-hero-art">
+        <img class="module-page-hero-image" src="/v1/assets/illustrations/git-roots-v1.png" alt="根系模块插图">
+      </figure>
+    </section>
+
+    <section class="module-page-section module-page-section-wide module-page-status" aria-labelledby="module-status-title">
+      <p class="module-page-section-kicker">诚实边界</p>
+      <h2 id="module-status-title">当前状态</h2>
+      <div class="module-page-phase-strip">
+        <article class="module-page-phase-card module-page-phase-current">
+              <p class="module-page-phase-label">v0.1 事实</p>
+              <h3 class="module-page-phase-title">根系的v0.1 事实</h3>
+              <p class="module-page-phase-text">v0.1 提供明确标注的只读根系投影与本地 Workspace 绑定；真实文件索引、依赖图、Git 工作面和向量检索尚未实现。</p>
+            </article><article class="module-page-phase-card module-page-phase-candidate">
+              <p class="module-page-phase-label">候选蓝图</p>
+              <h3 class="module-page-phase-title">根系的候选蓝图</h3>
+              <p class="module-page-phase-text">第二层候选蓝图先交付遵守忽略规则的只读扫描、FileRef、文本预览、Git 状态和发送前文件勾选。</p>
+            </article><article class="module-page-phase-card module-page-phase-vision">
+              <p class="module-page-phase-label">长期愿景</p>
+              <h3 class="module-page-phase-title">根系的长期愿景</h3>
+              <p class="module-page-phase-text">长期形成可搜索的本地根网，结合精确检索、可选向量召回、依赖分析、检查点和受治理的冬季文件代谢。</p>
+            </article>
+      </div>
+    </section>
+
+    <div class="module-page-grid">
+      <section class="module-page-section module-page-section-wide module-page-design" aria-labelledby="module-design-title">
+        <p class="module-page-section-kicker">为什么这样设计</p>
+        <h2 id="module-design-title">设计理念</h2>
+        <div class="module-page-design-copy"><p>根系遵守“先索引、后建议、经授权再变更”。真实文件系统与 Git 是物理事实源，模块默认只读扫描并建立 FileRef、哈希、依赖和风险投影，不因自动分类而改名、移动或删除用户文件。</p><p>稳定身份不绑定路径，搜索也不只依赖向量召回。精确路径、全文、Git、来源和权限过滤始终保留；语义或向量检索只是可选补充，并且每个结果都必须回到真实文件版本。</p></div>
+      </section>
+      <section class="module-page-section module-page-section-wide module-page-terminology" aria-labelledby="module-terminology-title">
+        <p class="module-page-section-kicker">Miracle × Agent Harness</p>
+        <h2 id="module-terminology-title">Agent Harness 术语</h2>
+        <p class="module-page-terminology-intro">这些词描述本模块真正拥有或消费的产品对象；它们与底层 Engine 的 Session、Agent Loop 和工具执行保持清晰边界。</p>
+        <dl class="module-page-terminology-grid"><div class="module-page-term-card">
+        <dt class="module-page-term">Workspace（工作区）</dt>
+        <dd class="module-page-term-definition">当前 Mission 绑定的真实本地项目目录，是文件内容和目录结构的权威来源，而不是 Kernel 数据库的副本。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">FileRef（文件引用）</dt>
+        <dd class="module-page-term-definition">带稳定 UID、当前路径、类型、哈希和更新时间的文件索引记录；路径改变后身份仍可追踪。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Content Hash（内容哈希）</dt>
+        <dd class="module-page-term-definition">用于识别准确文件版本、重命名与重复内容的摘要，是追溯上下文和证据版本的重要锚点。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">GitBinding（Git 绑定）</dt>
+        <dd class="module-page-term-definition">把文件或治理检查点连接到仓库、分支、提交和工作树状态的引用，不复制 Git 历史。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">ModuleBinding（模块投影绑定）</dt>
+        <dd class="module-page-term-definition">文件到十三领域的可解释分类，记录规则版本、理由、置信度和人工修正；它只建立索引，不移动文件。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Checkpoint Projection（检查点投影）</dt>
+        <dd class="module-page-term-definition">ROOT 对 Kernel 检查点中的 Git 锚点和文件恢复信息的显示；检查点本身仍由 Kernel 统一拥有。</dd>
+      </div></dl>
+      </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">它拥有的事实</p>
+    <h2>职责</h2>
+    <ul class="module-page-list"><li>按忽略规则只读扫描 Workspace，建立稳定 FileRef、内容哈希、类型和更新时间索引。</li><li>提供文本/图片/PDF 预览、上下文勾选、依赖图、Git 分支/Diff/工作树风险。</li><li>把文件可解释地投影到十三领域，并保存 Git 锚点与检查点投影。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">边界先于能力</p>
+    <h2>明确不负责</h2>
+    <ul class="module-page-list"><li>默认不自动移动、重命名或删除用户文件，也不把向量相似度当作权威路径。</li><li>不拥有项目的语义蓝图；金字塔负责语义地图，COMMAND 负责任务状态。</li><li>不绕过戒律读取敏感路径或扩大写入范围。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">进入模块</p>
+    <h2>输入</h2>
+    <ul class="module-page-list"><li>真实文件系统、Git repository、忽略规则、LSP/依赖信息与用户选择。</li><li>戒律提供的可读/可写范围和 COMMAND 提供的任务上下文。</li><li>文件路径变化、内容哈希、Diff、提交与恢复验证结果。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">离开模块</p>
+    <h2>输出</h2>
+    <ul class="module-page-list"><li>RepositoryNode、FileRef、GitBinding、DependencyRef 和 CheckpointProjection。</li><li>精确路径/文本搜索结果、可选语义召回、预览和上下文选择清单。</li><li>供金字塔、世界树、伊甸园和时光胶囊引用的物理事实索引。</li></ul>
+  </section>
+      <section class="module-page-section">
+        <p class="module-page-section-kicker">数据语言</p>
+        <h2>核心对象</h2>
+        <ul class="module-page-object-list"><li>RepositoryNode</li><li>FileRef</li><li>GitBinding</li><li>DependencyRef</li><li>FileSelection</li><li>CheckpointProjection</li></ul>
+      </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">缩放而不改事实</p>
+    <h2>层级与 LOD</h2>
+    <ul class="module-page-list"><li>S1 是根系；S2 展开工作区扫描、文件索引、预览选择、模块投影、Git 状态和检查点。</li><li>物理层级从 Workspace → Repository → Directory/File → Chunk/Reference 展开。</li><li>LOD0 看仓库健康与规模，LOD1 看目录/依赖，LOD2+ 看内容、Diff、哈希和 Git 原始证据。</li></ul>
+  </section>
+      <section class="module-page-section module-page-section-wide">
+        <p class="module-page-section-kicker">ProjectEpoch</p>
+        <h2>四季行为</h2>
+        <div class="module-page-season-grid">
+          <article class="module-page-season">
+                <p class="module-page-season-name"><span>春</span>Spring</p>
+                <p>扫描工作区、确认忽略/敏感范围、记录初始 Git 状态和恢复锚点。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>夏</span>Summer</p>
+                <p>增量更新文件、依赖和 Diff 索引，为每次运行提供显式上下文选择。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>秋</span>Autumn</p>
+                <p>固定成果对应的文件版本、测试与 Git 证据，支持伊甸园验收。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>冬</span>Winter</p>
+                <p>生成重复、过期、孤立和技术债候选；任何归档/删除先展示影响、Diff 与回滚。</p>
+              </article>
+        </div>
+      </section>
+      <section class="module-page-section module-page-section-wide">
+        <p class="module-page-section-kicker">一套事实，多个工作面</p>
+        <h2>上下游关系</h2>
+        <div class="module-page-relations">
+          <div class="module-page-relation-group"><h3>上游输入</h3><div class="module-page-relation-list"><a class="module-page-relation-link" href="/v1/modules/laws/"><span>MH.LAW</span>戒律</a><a class="module-page-relation-link" href="/v1/modules/blueprint/"><span>MH.COMMAND</span>蓝图规划台</a><a class="module-page-relation-link" href="/v1/modules/armory/"><span>MH.ARMORY</span>众神武库</a></div></div>
+          <div class="module-page-relation-group"><h3>下游消费</h3><div class="module-page-relation-list"><a class="module-page-relation-link" href="/v1/modules/pyramid/"><span>MH.PYRAMID</span>金字塔</a><a class="module-page-relation-link" href="/v1/modules/world-tree/"><span>MH.TREE</span>世界树</a><a class="module-page-relation-link" href="/v1/modules/eden/"><span>MH.EDEN</span>伊甸园</a><a class="module-page-relation-link" href="/v1/modules/time-capsule/"><span>MH.CAPSULE</span>时光胶囊</a><a class="module-page-relation-link" href="/v1/modules/wisdom-well/"><span>MH.WELL</span>智慧之泉</a></div></div>
+        </div>
+      </section>
+      <section class="module-page-section module-page-section-wide module-page-next">
+        <p class="module-page-section-kicker">先塔尖，后第二层</p>
+        <h2>下一阶段与验收</h2>
+        <p class="module-page-next-copy">只读扫描一个已授权 Workspace，为文件建立稳定 ID/哈希，并把显式选择安全地送入一次模型上下文。</p>
+        <h3>可检查的验收条件</h3>
+        <ul class="module-page-acceptance"><li>扫描严格遵守忽略规则与戒律，默认不会写入、移动或删除文件。</li><li>文件改名后可通过稳定 ID/哈希保持关系；内容变化能显示新旧版本。</li><li>每个搜索结果和上下文片段都能返回精确路径、版本与选取原因。</li></ul>
+      </section>
+    </div>
+
+    <nav class="module-page-catalog" aria-label="十三模块目录">
+      <div class="module-page-catalog-heading">
+        <p class="module-page-section-kicker">S1 DOMAIN MAP</p>
+        <h2>继续查看十三模块</h2>
+      </div>
+      <div class="module-page-catalog-grid"><a class="module-page-catalog-link" href="/v1/modules/blueprint/"><span>MH.COMMAND</span>蓝图规划台</a><a class="module-page-catalog-link" href="/v1/modules/laws/"><span>MH.LAW</span>戒律</a><a class="module-page-catalog-link" href="/v1/modules/time-capsule/"><span>MH.CAPSULE</span>时光胶囊</a><a class="module-page-catalog-link" href="/v1/modules/eden/"><span>MH.EDEN</span>伊甸园</a><a class="module-page-catalog-link" href="/v1/modules/world-tree/"><span>MH.TREE</span>世界树</a><a class="module-page-catalog-link" href="/v1/modules/pyramid/"><span>MH.PYRAMID</span>金字塔</a><a class="module-page-catalog-link" href="/v1/modules/roots/" aria-current="page"><span>MH.ROOT</span>根系</a><a class="module-page-catalog-link" href="/v1/modules/wisdom-well/"><span>MH.WELL</span>智慧之泉</a><a class="module-page-catalog-link" href="/v1/modules/athena-academy/"><span>MH.ACADEMY</span>雅典娜学宫</a><a class="module-page-catalog-link" href="/v1/modules/experiments/"><span>MH.EXPERIMENTS</span>实验神殿</a><a class="module-page-catalog-link" href="/v1/modules/agent-council/"><span>MH.ANGELS</span>天使议会</a><a class="module-page-catalog-link" href="/v1/modules/armory/"><span>MH.ARMORY</span>众神武库</a><a class="module-page-catalog-link" href="/v1/modules/observatory/"><span>MH.OBSERVATORY</span>观星台</a></div>
+    </nav>
+  </main>
+
+  <footer class="module-page-footer">
+    <div class="module-page-footer-inner">
+      <p class="module-page-footer-note">十三领域共享同一套 Kernel 事实；页面是公开设计说明，不是已完成功能的宣传。</p>
+      <nav class="module-page-footer-links" aria-label="页脚链接">
+        <a href="/v1/">返回首页</a>
+        <a href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md">阅读完整构想</a>
+        <a href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip">下载 Windows Alpha</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

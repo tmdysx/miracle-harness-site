@@ -166,7 +166,7 @@ test("the build has an explicit public allowlist", async () => {
   const buildScript = await readFile(new URL("scripts/build.mjs", root), "utf8");
   assert.match(
     buildScript,
-    /const publicAllowlist = \["index\.html", "styles\.css", "app\.js", "assets"\]/u,
+    /const publicAllowlist = \["index\.html", "styles\.css", "app\.js", "assets", "v1"\]/u,
   );
   assert.match(
     buildScript,
@@ -190,4 +190,61 @@ test("the static asset tree contains only web media", async () => {
     }
   }
   await walk(new URL("assets/", root));
+});
+
+async function archivePages(directory = new URL("archive/v1/", root)) {
+  const pages = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const child = new URL(`${entry.name}${entry.isDirectory() ? "/" : ""}`, directory);
+    if (entry.isDirectory()) pages.push(...await archivePages(child));
+    else if (entry.name.endsWith(".html")) pages.push(child);
+  }
+  return pages;
+}
+
+test("the homepage links the first website kept at /v1/", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  assert.match(html, /<section class="section section-alt" id="history"/u);
+  assert.equal((html.match(/href="\/v1\/"/gu) ?? []).length, 2, "history card and footer link");
+  await stat(new URL("archive/v1/index.html", root));
+});
+
+test("every archived page says it is the archived first version and stays inside /v1/", async () => {
+  const pages = await archivePages();
+  assert.equal(pages.length, 14, "the first homepage plus its 13 module pages");
+  for (const page of pages) {
+    const html = await readFile(page, "utf8");
+    const where = page.pathname;
+    assert.match(html, /<div class="v1-archive-banner" role="note">/u, where);
+    assert.match(html, /<a class="v1-archive-link" href="\/">/u, where);
+    assert.match(html, /<meta name="robots" content="noindex">/u, where);
+    assert.match(html, /<link rel="stylesheet" href="\/v1\/archive-banner\.css">/u, where);
+    for (const [, url] of html.matchAll(/\s(?:href|src|poster)="(\/[^"]*)"/gu)) {
+      if (url.startsWith("//")) continue;
+      assert.ok(url.startsWith("/v1/") || url === "/" || url === "/#guestbook", `${where} links ${url} outside /v1/`);
+    }
+  }
+});
+
+test("archived pages only reference files that exist in the archive", async () => {
+  const base = new URL("archive/v1/", root);
+  for (const page of await archivePages()) {
+    const html = await readFile(page, "utf8");
+    for (const [, url] of html.matchAll(/\s(?:href|src|poster)="([^"#?]+)"/gu)) {
+      if (/^(?:[a-z]+:|\/\/|mailto:)/iu.test(url) || url === "/") continue;
+      const target = url.startsWith("/v1/") ? new URL(url.slice(4), base) : new URL(url, page);
+      const file = target.pathname.endsWith("/") ? new URL("index.html", target) : target;
+      await stat(file).catch(() => assert.fail(`${page.pathname} references missing ${url}`));
+    }
+  }
+});
+
+test("the archived first website no longer runs its own guestbook", async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL("archive/v1/index.html", root), "utf8"),
+    readFile(new URL("archive/v1/app.js", root), "utf8"),
+  ]);
+  assert.doesNotMatch(html, /id="guestbook-form"|id="turnstile-container"/u);
+  assert.match(html, /href="\/#guestbook"/u);
+  assert.doesNotMatch(script, /^\s*initializeGuestbook\(\);/mu);
 });

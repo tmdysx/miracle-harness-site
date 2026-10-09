@@ -26,6 +26,7 @@ miracle-harness-site/
 │   └── concepts/               # 由产品仓库 品牌/ 转换的 WebP 概念插画（AI 生成，非界面截图）
 ├── src/index.ts                # Worker、API、安全头、canonical 与旧页面重定向
 ├── migrations/0001_guestbook.sql
+├── archive/v1/                 # 第一版官网（2026-08）原样存档，发布到 /v1/
 ├── scripts/build.mjs           # 只按白名单复制公开文件到 dist/
 ├── test/                       # Worker/D1/Turnstile/API 与静态安全测试
 ├── .github/workflows/deploy.yml
@@ -33,7 +34,7 @@ miracle-harness-site/
 └── package.json
 ```
 
-`dist/` 的顶层公开面严格限制为 `index.html`、`styles.css`、`app.js` 与 `assets/`；构建脚本在输出不完全等于白名单时直接失败。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产。
+`dist/` 的顶层公开面严格限制为 `index.html`、`styles.css`、`app.js`、`assets/` 与 `v1/`（由 `archive/v1/` 复制）；构建脚本在输出不完全等于白名单时直接失败。Worker 源码、Wrangler 配置、迁移、测试、README 与本地密钥不会成为静态资产。
 
 ## 文案原则
 
@@ -151,7 +152,7 @@ wrangler deploy
 - `miracleharness.com`：唯一 canonical 站点。
 - `www.miracleharness.com`：仍指向同一 Worker，但 Worker 对所有路径与查询参数做永久 `308` 重定向到裸域名。
 
-旧版站点的十三个模块设计页已下线：`/modules` 与 `/modules/*` 由 Worker 在读取静态资源之前返回 `301` 到 `/`。
+第一版官网（2026-08，「奇迹 Harness」桌面原型）原样存档在 `/v1/`，首页「版本历程」和页脚都有入口，好让访客看到项目是怎么一版版改过来的。存档由 `d0813a1` 构建产物生成：每页顶部加「历史存档」提示条和 `noindex`，站内绝对路径改到 `/v1/` 下，旧留言板换成指向新版留言板的链接（不再连留言接口）。旧链接 `/modules` 与 `/modules/<页面>/` 由 Worker 返回 `301` 到存档里的同一页（`/v1/`、`/v1/modules/<页面>/`）。
 
 ## 发布前检查
 

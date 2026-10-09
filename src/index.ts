@@ -515,11 +515,12 @@ function canonicalRedirect(request: Request): Response | null {
   return Response.redirect(url.toString(), 308);
 }
 
-// The retired module design pages (/modules and /modules/*) were removed when
-// the site switched to the research workbench; send old links to the homepage.
+// The first website's module design pages (/modules and /modules/*) now live in
+// the /v1/ archive; send old links to the same page there.
 function retiredModulesRedirect(url: URL): Response | null {
   if (url.pathname !== "/modules" && !url.pathname.startsWith("/modules/")) return null;
-  return Response.redirect(`${url.origin}/`, 301);
+  const rest = url.pathname.slice("/modules".length).replace(/^\/+/u, "");
+  return Response.redirect(`${url.origin}/v1/${rest ? `modules/${rest}` : ""}`, 301);
 }
 
 export default {
