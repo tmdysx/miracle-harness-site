@@ -240,16 +240,16 @@ describe("domain behavior", () => {
   });
 
   it.each([
-    "/modules",
-    "/modules/",
-    "/modules/blueprint/",
-    "/modules/x?ref=old",
-  ])("permanently redirects the retired module page %s to the homepage", async (path) => {
+    ["/modules", "https://miracleharness.com/v1/"],
+    ["/modules/", "https://miracleharness.com/v1/"],
+    ["/modules/blueprint/", "https://miracleharness.com/v1/modules/blueprint/"],
+    ["/modules/x?ref=old", "https://miracleharness.com/v1/modules/x"],
+  ])("permanently redirects the first website's module page %s into the /v1/ archive", async (path, location) => {
     const response = await callWorker(
       new IncomingRequest(`https://miracleharness.com${path}`),
     );
     expect(response.status).toBe(301);
-    expect(response.headers.get("Location")).toBe("https://miracleharness.com/");
+    expect(response.headers.get("Location")).toBe(location);
   });
 
   it("wraps every static asset response in the security headers", async () => {

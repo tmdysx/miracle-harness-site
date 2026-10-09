@@ -1,0 +1,25 @@
+/* 第一版官网存档的顶部提示条（2026-10 加）：不改动原页面的样式 */
+.v1-archive-banner {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font: 600 14px/1.5 system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #3b2f12;
+  background: #f4e7c3;
+  border-bottom: 1px solid #d9c38a;
+  text-align: center;
+}
+.v1-archive-en { font-weight: 500; color: #5c4a1c; }
+.v1-archive-link {
+  color: #1f5f4f;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.v1-archive-link:hover, .v1-archive-link:focus-visible { color: #123f34; }

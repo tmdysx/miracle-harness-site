@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="管理 Agent 身份、能力、角色装配、任务指派与交接，让多 Agent 协作有边界、有谱系，而不是人数表演。">
+  <title>天使议会 · MH.ANGELS · Miracle Harness</title>
+  <link rel="icon" href="/v1/assets/brand/miracle-bird-mark-v1.png">
+  <link rel="stylesheet" href="/v1/styles.css">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/v1/archive-banner.css">
+</head>
+<body class="module-page">
+  <div class="v1-archive-banner" role="note"><span class="v1-archive-text">历史存档 · 这是 MiracleHarness 的第一版官网（2026-08，「奇迹 Harness」桌面原型）。<span class="v1-archive-en"> Archived: the first MiracleHarness website (Aug 2026).</span></span><a class="v1-archive-link" href="/">看现在的版本 · Current site →</a></div>
+  <header class="module-page-header">
+    <div class="module-page-header-inner">
+      <a class="module-page-brand" href="/v1/" aria-label="返回 Miracle Harness 首页">
+        <img class="module-page-brand-mark" src="/v1/assets/brand/miracle-bird-mark-v1.png" alt="Miracle Harness 品牌图标">
+        <span class="module-page-brand-copy"><strong class="module-page-brand-name">Miracle Harness</strong><span class="module-page-brand-kicker">十三领域手册</span></span>
+      </a>
+      <nav class="module-page-actions" aria-label="页面操作">
+        <a class="module-page-button module-page-button-secondary" href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md">GitHub 完整构想</a>
+        <a class="module-page-button" href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip">下载 Windows Alpha</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="module-page-main">
+    <section class="module-page-hero">
+      <div class="module-page-hero-copy">
+        <p class="module-page-eyebrow">S1 领域 · MH.ANGELS</p>
+        <h1 class="module-page-title">天使议会</h1>
+        <p class="module-page-subtitle">Agent Registry &amp; Delegation</p>
+        <p class="module-page-lede">管理 Agent 身份、能力、角色装配、任务指派与交接，让多 Agent 协作有边界、有谱系，而不是人数表演。</p>
+      </div>
+      <figure class="module-page-hero-art">
+        <img class="module-page-hero-image" src="/v1/assets/illustrations/agent-registry-council-v1.png" alt="天使议会模块插图">
+      </figure>
+    </section>
+
+    <section class="module-page-section module-page-section-wide module-page-status" aria-labelledby="module-status-title">
+      <p class="module-page-section-kicker">诚实边界</p>
+      <h2 id="module-status-title">当前状态</h2>
+      <div class="module-page-phase-strip">
+        <article class="module-page-phase-card module-page-phase-current">
+              <p class="module-page-phase-label">v0.1 事实</p>
+              <h3 class="module-page-phase-title">天使议会的v0.1 事实</h3>
+              <p class="module-page-phase-text">v0.1 的 Agent 会议已支持一个 OpenAI-compatible 模型的纯文本流式对话、停止与重放，但没有 Agent Registry、多 Agent 或工具委派。</p>
+            </article><article class="module-page-phase-card module-page-phase-candidate">
+              <p class="module-page-phase-label">候选蓝图</p>
+              <h3 class="module-page-phase-title">天使议会的候选蓝图</h3>
+              <p class="module-page-phase-text">候选蓝图先把单模型绑定提升为可版本化 AgentProfile/Preset，并将一次 Session 绑定到明确 WorkItem 和规则版本。</p>
+            </article><article class="module-page-phase-card module-page-phase-vision">
+              <p class="module-page-phase-label">长期愿景</p>
+              <h3 class="module-page-phase-title">天使议会的长期愿景</h3>
+              <p class="module-page-phase-text">长期支持可自由组合但受治理的多 Agent 会议、Subagent 委派、能力评测和跨模型可靠交接。</p>
+            </article>
+      </div>
+    </section>
+
+    <div class="module-page-grid">
+      <section class="module-page-section module-page-section-wide module-page-design" aria-labelledby="module-design-title">
+        <p class="module-page-section-kicker">为什么这样设计</p>
+        <h2 id="module-design-title">设计理念</h2>
+        <div class="module-page-design-copy"><p>天使议会把“Agent 是谁、被派去做什么”与“Agent 怎样推理和调用工具”分开。它治理身份、装配与委派，复用 Engine 的 Agent Registry、Session fork 和 Subagent 能力，不重新实现 Agent Loop 或沙盒。</p><p>多 Agent 的价值来自可解释分工而非数量。每次指派绑定准确 WorkItem 和边界，能力从武库装配、权限由戒律裁决、谱系写入世界树、表现依据可重放证据评价。</p></div>
+      </section>
+      <section class="module-page-section module-page-section-wide module-page-terminology" aria-labelledby="module-terminology-title">
+        <p class="module-page-section-kicker">Miracle × Agent Harness</p>
+        <h2 id="module-terminology-title">Agent Harness 术语</h2>
+        <p class="module-page-terminology-intro">这些词描述本模块真正拥有或消费的产品对象；它们与底层 Engine 的 Session、Agent Loop 和工具执行保持清晰边界。</p>
+        <dl class="module-page-terminology-grid"><div class="module-page-term-card">
+        <dt class="module-page-term">AgentProfile（Agent 档案）</dt>
+        <dd class="module-page-term-definition">记录 Agent 的稳定身份、来源、生命周期和责任边界；它描述“谁在工作”，不等于底层 Agent Loop。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">CapabilityProfile（能力画像）</dt>
+        <dd class="module-page-term-definition">对 Agent 可用模型、Skill、工具、限制和适用任务的声明，实际能力仍需从众神武库和健康状态核验。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Preset（角色装配）</dt>
+        <dd class="module-page-term-definition">为编码、研究、验证等角色组合 Agent、模型与能力的可版本化模板，不会自动获得超出戒律的权限。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Assignment（任务指派）</dt>
+        <dd class="module-page-term-definition">把准确 WorkItem、职责、交付物、截止或停止条件分派给一个 Agent 的治理记录。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Subagent Lineage（子 Agent 谱系）</dt>
+        <dd class="module-page-term-definition">记录受治理分支 Agent 的父级、任务范围、Session 和汇报关系，防止子 Agent 自行开启第二条主线。</dd>
+      </div><div class="module-page-term-card">
+        <dt class="module-page-term">Performance Record（执行评价）</dt>
+        <dd class="module-page-term-definition">依据观星台轨迹和伊甸园 Verdict 形成的适用范围、完成质量与失败模式记录，不是模型自我评分。</dd>
+      </div></dl>
+      </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">它拥有的事实</p>
+    <h2>职责</h2>
+    <ul class="module-page-list"><li>登记 Agent 身份、来源、生命周期、能力限制和适用工作类型。</li><li>把模型、Skill、工具和戒律装配为 Preset，并将明确 WorkItem 指派给 Agent。</li><li>管理受治理的 Subagent 分支、会议角色、交接关系和可证据化的表现记录。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">边界先于能力</p>
+    <h2>明确不负责</h2>
+    <ul class="module-page-list"><li>不重写 Agent Loop、Session fork 或底层执行引擎。</li><li>Agent 不能给自己分配更高权限、改变 Mission，或宣布自己的成果已验收。</li><li>不把模型品牌当作能力证明；能力必须由版本、限制与测试描述。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">进入模块</p>
+    <h2>输入</h2>
+    <ul class="module-page-list"><li>COMMAND 的 WorkItem/Envelope、LAW 有效规则包与人类委派决定。</li><li>ARMORY 的模型/Skill/Tool 能力和 Provider 健康状态。</li><li>TREE 的谱系、OBSERVATORY 的运行证据与 EDEN 的质量结论。</li></ul>
+  </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">离开模块</p>
+    <h2>输出</h2>
+    <ul class="module-page-list"><li>AgentProfile、CapabilityProfile、Preset、Assignment 与 SubagentRelation。</li><li>会议角色、任务交接包、能力缺口和 PerformanceRecord。</li><li>供世界树、观星台和中控台使用的身份与责任来源。</li></ul>
+  </section>
+      <section class="module-page-section">
+        <p class="module-page-section-kicker">数据语言</p>
+        <h2>核心对象</h2>
+        <ul class="module-page-object-list"><li>AgentProfile</li><li>CapabilityProfile</li><li>Preset</li><li>Assignment</li><li>SubagentRelation</li><li>PerformanceRecord</li></ul>
+      </section>
+      <section class="module-page-section">
+    <p class="module-page-section-kicker">缩放而不改事实</p>
+    <h2>层级与 LOD</h2>
+    <ul class="module-page-list"><li>S1 是天使议会；S2 展开 Agent Registry、能力档案、Preset、指派、Subagent 和表现。</li><li>组织层级从会议 → 角色/Agent → Assignment → Subagent/Run 展开，并保留父子汇报关系。</li><li>LOD0 看会议与责任，LOD1 看 Agent/任务，LOD2+ 查看模型版本、能力测试、戒律与运行证据。</li></ul>
+  </section>
+      <section class="module-page-section module-page-section-wide">
+        <p class="module-page-section-kicker">ProjectEpoch</p>
+        <h2>四季行为</h2>
+        <div class="module-page-season-grid">
+          <article class="module-page-season">
+                <p class="module-page-season-name"><span>春</span>Spring</p>
+                <p>根据蓝图选定最小 Agent 阵容、角色、能力和权限，冻结指派边界。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>夏</span>Summer</p>
+                <p>按叶任务委派、fork 和交接；每个分支保持父任务、上下文和停止条件。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>秋</span>Autumn</p>
+                <p>依据伊甸园结论和观星台证据评价适用范围，不用主观“聪明度”排名。</p>
+              </article><article class="module-page-season">
+                <p class="module-page-season-name"><span>冬</span>Winter</p>
+                <p>淘汰失效 Preset、修订能力档案、归档表现与失败模式，提出下一纪元装配候选。</p>
+              </article>
+        </div>
+      </section>
+      <section class="module-page-section module-page-section-wide">
+        <p class="module-page-section-kicker">一套事实，多个工作面</p>
+        <h2>上下游关系</h2>
+        <div class="module-page-relations">
+          <div class="module-page-relation-group"><h3>上游输入</h3><div class="module-page-relation-list"><a class="module-page-relation-link" href="/v1/modules/blueprint/"><span>MH.COMMAND</span>蓝图规划台</a><a class="module-page-relation-link" href="/v1/modules/laws/"><span>MH.LAW</span>戒律</a><a class="module-page-relation-link" href="/v1/modules/armory/"><span>MH.ARMORY</span>众神武库</a><a class="module-page-relation-link" href="/v1/modules/eden/"><span>MH.EDEN</span>伊甸园</a><a class="module-page-relation-link" href="/v1/modules/observatory/"><span>MH.OBSERVATORY</span>观星台</a></div></div>
+          <div class="module-page-relation-group"><h3>下游消费</h3><div class="module-page-relation-list"><a class="module-page-relation-link" href="/v1/modules/world-tree/"><span>MH.TREE</span>世界树</a><a class="module-page-relation-link" href="/v1/modules/time-capsule/"><span>MH.CAPSULE</span>时光胶囊</a><a class="module-page-relation-link" href="/v1/modules/observatory/"><span>MH.OBSERVATORY</span>观星台</a></div></div>
+        </div>
+      </section>
+      <section class="module-page-section module-page-section-wide module-page-next">
+        <p class="module-page-section-kicker">先塔尖，后第二层</p>
+        <h2>下一阶段与验收</h2>
+        <p class="module-page-next-copy">为当前单模型会话建立真实 AgentProfile、CapabilityProfile 和 Assignment，不增加第二个 Agent 就先跑通治理闭环。</p>
+        <h3>可检查的验收条件</h3>
+        <ul class="module-page-acceptance"><li>每次运行都能指出准确 Agent、模型版本、能力、任务、戒律和 Provider 绑定。</li><li>Agent 无法自行扩大 Assignment 或权限，Subagent 始终可追溯到父任务。</li><li>表现记录引用运行与验收证据，并明确适用范围和失败模式。</li></ul>
+      </section>
+    </div>
+
+    <nav class="module-page-catalog" aria-label="十三模块目录">
+      <div class="module-page-catalog-heading">
+        <p class="module-page-section-kicker">S1 DOMAIN MAP</p>
+        <h2>继续查看十三模块</h2>
+      </div>
+      <div class="module-page-catalog-grid"><a class="module-page-catalog-link" href="/v1/modules/blueprint/"><span>MH.COMMAND</span>蓝图规划台</a><a class="module-page-catalog-link" href="/v1/modules/laws/"><span>MH.LAW</span>戒律</a><a class="module-page-catalog-link" href="/v1/modules/time-capsule/"><span>MH.CAPSULE</span>时光胶囊</a><a class="module-page-catalog-link" href="/v1/modules/eden/"><span>MH.EDEN</span>伊甸园</a><a class="module-page-catalog-link" href="/v1/modules/world-tree/"><span>MH.TREE</span>世界树</a><a class="module-page-catalog-link" href="/v1/modules/pyramid/"><span>MH.PYRAMID</span>金字塔</a><a class="module-page-catalog-link" href="/v1/modules/roots/"><span>MH.ROOT</span>根系</a><a class="module-page-catalog-link" href="/v1/modules/wisdom-well/"><span>MH.WELL</span>智慧之泉</a><a class="module-page-catalog-link" href="/v1/modules/athena-academy/"><span>MH.ACADEMY</span>雅典娜学宫</a><a class="module-page-catalog-link" href="/v1/modules/experiments/"><span>MH.EXPERIMENTS</span>实验神殿</a><a class="module-page-catalog-link" href="/v1/modules/agent-council/" aria-current="page"><span>MH.ANGELS</span>天使议会</a><a class="module-page-catalog-link" href="/v1/modules/armory/"><span>MH.ARMORY</span>众神武库</a><a class="module-page-catalog-link" href="/v1/modules/observatory/"><span>MH.OBSERVATORY</span>观星台</a></div>
+    </nav>
+  </main>
+
+  <footer class="module-page-footer">
+    <div class="module-page-footer-inner">
+      <p class="module-page-footer-note">十三领域共享同一套 Kernel 事实；页面是公开设计说明，不是已完成功能的宣传。</p>
+      <nav class="module-page-footer-links" aria-label="页脚链接">
+        <a href="/v1/">返回首页</a>
+        <a href="https://github.com/tmdysx/miracle-harness/blob/main/MIRACLE_HARNESS_VISION.md">阅读完整构想</a>
+        <a href="https://github.com/tmdysx/miracle-harness/releases/latest/download/Miracle-Harness-v0.1.0-alpha.1-win-x64.zip">下载 Windows Alpha</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

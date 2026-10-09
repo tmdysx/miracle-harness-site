@@ -269,6 +269,18 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .status-col-todo li::before { background: #f3c55a; }
 
 /* License */
+/* Version history */
+.history-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 980px; margin: 0 auto; padding: 0; list-style: none; }
+.history-card { display: grid; align-content: start; gap: 8px; min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-soft); }
+.history-card-now { border-color: rgba(31, 106, 88, .35); background: linear-gradient(160deg, var(--jade-pale), #fff 60%); }
+.history-card h3 { margin: 0; color: var(--ink); font-size: 18px; }
+.history-card p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.75; }
+.history-tag { justify-self: start; padding: 3px 9px; border-radius: 999px; color: #7a5e22; background: var(--bronze-pale); font-size: 11px; font-weight: 800; letter-spacing: .02em; }
+.history-card-now .history-tag { color: var(--jade); background: rgba(142, 198, 188, .22); }
+.history-here { justify-self: start; color: var(--jade); font-size: 13px; font-weight: 700; }
+.history-link { justify-self: start; color: var(--jade); font-size: 14px; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+.history-link:hover, .history-link:focus-visible { color: var(--bronze); }
+
 .license-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .license-card { min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-soft); }
 .license-card-accent { border-color: rgba(168, 133, 60, .45); background: linear-gradient(160deg, #fffdf8, #fff); }
@@ -376,7 +388,7 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
   .section { padding: 48px 16px; }
   .section-head { margin-bottom: 26px; }
   .section-head h2 { font-size: 24px; }
-  .feature-grid, .gallery-grid, .uses-grid, .license-grid, .stage-flow { grid-template-columns: 1fr; }
+  .feature-grid, .gallery-grid, .uses-grid, .license-grid, .stage-flow, .history-list { grid-template-columns: 1fr; }
   .stage::after, .stage:nth-child(n)::after { content: none; }
   .feature-card, .agent-card, .license-card { padding: 18px; }
   .download-panel, .guestbook-form, .guestbook-feed { padding: 20px; }
