@@ -76,21 +76,22 @@ test("the retired desktop prototype is no longer linked or embedded", async () =
     assert.doesNotMatch(source, /github\.com\/tmdysx\/miracle-harness(?![-\w])/u);
     assert.doesNotMatch(source, /Miracle-Harness-v0\.1\.0/u);
     assert.doesNotMatch(source, /href="\/modules\//u);
-    assert.doesNotMatch(source, /<video\b/u);
+    assert.doesNotMatch(source, /miracle-harness-concept-v1\.mp4/u);
   }
 });
 
 test("every local image and icon referenced by the page exists in assets/", async () => {
   const html = await readFile(new URL("index.html", root), "utf8");
   const references = Array.from(
-    html.matchAll(/(?:src|href)="(assets\/[^"]+)"/gu),
+    html.matchAll(/(?:src|href|poster)="(assets\/[^"]+)"/gu),
     (match) => match[1],
   );
   assert.ok(references.length > 0);
   for (const reference of references) {
     const info = await stat(new URL(reference, root));
     assert.ok(info.isFile(), `${reference} should be a file`);
-    assert.ok(info.size > 0 && info.size < 1024 * 1024, `${reference} should stay small`);
+    const limit = /^assets\/video\/[^/]+\.mp4$/u.test(reference) ? 10 * 1024 * 1024 : 1024 * 1024;
+    assert.ok(info.size > 0 && info.size < limit, `${reference} should stay small`);
   }
 
   const images = Array.from(html.matchAll(/<img\b[^>]*>/gu), (match) => match[0]);
@@ -101,7 +102,7 @@ test("every local image and icon referenced by the page exists in assets/", asyn
   }
 });
 
-test("AI concept illustrations live under assets/concepts/, not a screenshots folder", async () => {
+test("AI concept illustrations live under assets/concepts/; assets/screens/ holds only real screenshots", async () => {
   const [html, script] = await Promise.all([
     readFile(new URL("index.html", root), "utf8"),
     readFile(new URL("app.js", root), "utf8"),
@@ -114,10 +115,12 @@ test("AI concept illustrations live under assets/concepts/, not a screenshots fo
   for (const image of conceptImages) {
     assert.match(image, /^assets\/concepts\//u, `${image} should live under assets/concepts/`);
   }
-  for (const source of [html, script]) {
-    assert.doesNotMatch(source, /assets\/screens\//u);
+  const screenshots = Array.from(html.matchAll(/<img\b[^>]*\ssrc="assets\/screens\/[^"]+"[^>]*>/gu), (match) => match[0]);
+  for (const image of screenshots) {
+    assert.doesNotMatch(image, /\salt="AI 生成/u, `concept art must not live under assets/screens/: ${image}`);
+    assert.match(image, /真实界面截图/u, `screenshots say they are real: ${image}`);
   }
-  await assert.rejects(stat(new URL("assets/screens/", root)), { code: "ENOENT" });
+  assert.doesNotMatch(script, /assets\/screens\/[^"]*concept/u);
 });
 
 test("guestbook rendering avoids HTML injection sinks", async () => {
@@ -178,6 +181,7 @@ test("the build has an explicit public allowlist", async () => {
 
 test("the static asset tree contains only web media", async () => {
   const allowed = /\.(?:png|jpe?g|webp|svg)$/u;
+  const videos = [];
   async function walk(directory) {
     const entries = await readdir(directory, { withFileTypes: true });
     for (const entry of entries) {
@@ -185,11 +189,44 @@ test("the static asset tree contains only web media", async () => {
       if (entry.isDirectory()) {
         await walk(child);
       } else {
-        assert.match(entry.name, allowed, `unexpected asset: ${child.pathname}`);
+        if (/\.mp4$/u.test(entry.name)) videos.push(child.pathname);
+        else assert.match(entry.name, allowed, `unexpected asset: ${child.pathname}`);
       }
     }
   }
   await walk(new URL("assets/", root));
+  for (const video of videos) {
+    assert.match(video, /\/assets\/video\/[^/]+\.mp4$/u, `videos live only in assets/video/: ${video}`);
+  }
+});
+
+test("the promo film is click-to-play with sound and stays light", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  const videos = Array.from(html.matchAll(/<video\b[^>]*>/gu), (match) => match[0]);
+  assert.equal(videos.length, 1);
+  const [video] = videos;
+  assert.match(video, /\scontrols\b/u);
+  assert.match(video, /\spreload="metadata"/u);
+  assert.match(video, /\splaysinline\b/u);
+  assert.doesNotMatch(video, /\sautoplay\b|\smuted\b/u);
+  const poster = video.match(/\sposter="([^"]+)"/u)[1];
+  assert.match(poster, /^assets\/video\/[^/]+\.webp$/u);
+  await stat(new URL(poster, root));
+  assert.match(html, /<source src="assets\/video\/miracleharness-30s\.mp4" type="video\/mp4" \/>/u);
+  const film = await stat(new URL("assets/video/miracleharness-30s.mp4", root));
+  assert.ok(film.size < 10 * 1024 * 1024, "keep the film under 10 MB");
+  assert.match(html, /<a class="btn btn-ghost btn-film" href="#film"/u);
+});
+
+test("the why section lists the seven reasons next to the real note", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  assert.equal((html.match(/<li class="why-item">/gu) ?? []).length, 7);
+  for (let i = 1; i <= 7; i += 1) {
+    assert.match(html, new RegExp(`data-i18n="why${i}\\.title"`, "u"));
+    assert.match(html, new RegExp(`data-i18n="why${i}\\.desc"`, "u"));
+  }
+  assert.match(html, /<img src="assets\/screens\/why-sticky-note\.webp" width="1600" height="804"/u);
+  assert.match(html, /<a href="#why" data-i18n="nav\.why">/u);
 });
 
 async function archivePages(directory = new URL("archive/v1/", root)) {

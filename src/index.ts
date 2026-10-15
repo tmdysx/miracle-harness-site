@@ -523,6 +523,40 @@ function retiredModulesRedirect(url: URL): Response | null {
   return Response.redirect(`${url.origin}/v1/${rest ? `modules/${rest}` : ""}`, 301);
 }
 
+// Safari only plays video from servers that answer byte-range requests with
+// 206. Static assets may answer a Range request with the whole file, so for the
+// promo film we slice the requested range here when that happens.
+async function withVideoByteRange(request: Request, url: URL, response: Response): Promise<Response> {
+  if (!url.pathname.startsWith("/assets/video/") || !url.pathname.endsWith(".mp4")) return response;
+  if (response.status !== 200) return response;
+  const range = request.method === "GET" ? request.headers.get("Range") : null;
+  const match = range ? /^bytes=(\d*)-(\d*)$/u.exec(range.trim()) : null;
+  if (!match || (match[1] === "" && match[2] === "")) {
+    const headers = new Headers(response.headers);
+    headers.set("Accept-Ranges", "bytes");
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  }
+  const body = await response.arrayBuffer();
+  const size = body.byteLength;
+  let start: number;
+  let end: number;
+  if (match[1] === "") {
+    start = Math.max(0, size - Number(match[2]));
+    end = size - 1;
+  } else {
+    start = Number(match[1]);
+    end = match[2] === "" ? size - 1 : Math.min(Number(match[2]), size - 1);
+  }
+  if (!Number.isSafeInteger(start) || start >= size || start > end || (match[1] === "" && Number(match[2]) === 0)) {
+    return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${size}` } });
+  }
+  const headers = new Headers(response.headers);
+  headers.set("Accept-Ranges", "bytes");
+  headers.set("Content-Range", `bytes ${start}-${end}/${size}`);
+  headers.set("Content-Length", String(end - start + 1));
+  return new Response(body.slice(start, end + 1), { status: 206, headers });
+}
+
 export default {
   async fetch(request: Request, env: RuntimeEnv, ctx: ExecutionContext): Promise<Response> {
     const redirect = canonicalRedirect(request);
@@ -542,7 +576,7 @@ export default {
       if (retiredRedirect) return retiredRedirect;
 
       const assetResponse = await env.ASSETS.fetch(request);
-      return withStaticSecurityHeaders(assetResponse);
+      return withStaticSecurityHeaders(await withVideoByteRange(request, url, assetResponse));
     } catch (error: unknown) {
       if (error instanceof ApiInputError) {
         const response = apiError(error.status, error.code, error.message);

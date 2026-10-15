@@ -270,6 +270,56 @@ describe("domain behavior", () => {
     );
   });
 
+  describe("promo film byte ranges (Safari needs 206)", () => {
+    const film = "https://miracleharness.com/assets/video/miracleharness-30s.mp4";
+    const assetsReturning = (response: () => Response) =>
+      ({ ...env, ASSETS: { fetch: async () => response() } }) as unknown as Cloudflare.Env;
+    const whole = assetsReturning(() => new Response("0123456789", { headers: { "Content-Type": "video/mp4" } }));
+
+    it.each([
+      ["bytes=2-5", "2345", "bytes 2-5/10"],
+      ["bytes=8-", "89", "bytes 8-9/10"],
+      ["bytes=-3", "789", "bytes 7-9/10"],
+      ["bytes=6-99", "6789", "bytes 6-9/10"],
+    ])("answers %s with 206", async (range, body, contentRange) => {
+      const response = await callWorkerWithEnv(new IncomingRequest(film, { headers: { Range: range } }), whole);
+      expect(response.status).toBe(206);
+      expect(await response.text()).toBe(body);
+      expect(response.headers.get("Content-Range")).toBe(contentRange);
+      expect(response.headers.get("Content-Length")).toBe(String(body.length));
+      expect(response.headers.get("Accept-Ranges")).toBe("bytes");
+      expect(response.headers.get("Content-Type")).toBe("video/mp4");
+      expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
+    });
+
+    it.each(["bytes=10-", "bytes=5-2", "bytes=-0"])("answers an unsatisfiable %s with 416", async (range) => {
+      const response = await callWorkerWithEnv(new IncomingRequest(film, { headers: { Range: range } }), whole);
+      expect(response.status).toBe(416);
+      expect(response.headers.get("Content-Range")).toBe("bytes */10");
+    });
+
+    it("serves the whole film with Accept-Ranges when no range is asked", async () => {
+      const response = await callWorkerWithEnv(new IncomingRequest(film), whole);
+      expect(response.status).toBe(200);
+      expect(await response.text()).toBe("0123456789");
+      expect(response.headers.get("Accept-Ranges")).toBe("bytes");
+    });
+
+    it("passes through a 206 that static assets already made and leaves other files alone", async () => {
+      const partial = assetsReturning(() => new Response("23", { status: 206, headers: { "Content-Range": "bytes 2-3/10" } }));
+      const passed = await callWorkerWithEnv(new IncomingRequest(film, { headers: { Range: "bytes=2-3" } }), partial);
+      expect(passed.status).toBe(206);
+      expect(await passed.text()).toBe("23");
+      const page = await callWorkerWithEnv(
+        new IncomingRequest("https://miracleharness.com/styles.css", { headers: { Range: "bytes=0-1" } }),
+        whole,
+      );
+      expect(page.status).toBe(200);
+      expect(await page.text()).toBe("0123456789");
+      expect(page.headers.get("Accept-Ranges")).toBeNull();
+    });
+  });
+
   it("does not treat lookalike paths or the API as retired module pages", async () => {
     const lookalike = await callWorker(
       new IncomingRequest("https://miracleharness.com/modules-archive"),
