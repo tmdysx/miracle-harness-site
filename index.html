@@ -31,6 +31,7 @@
         <span class="brand-name"><b data-i18n="brand.name">MiracleHarness</b></span>
       </a>
       <nav class="main-nav" aria-label="主导航" data-i18n-aria="aria.mainNav">
+        <a href="#why" data-i18n="nav.why">初衷</a>
         <a href="#features" data-i18n="nav.features">能力</a>
         <a href="#workflow" data-i18n="nav.workflow">科研流程</a>
         <a href="#agents" data-i18n="nav.agents">接入 Agent</a>
@@ -60,6 +61,7 @@
             <a class="btn btn-primary" href="https://github.com/tmdysx/agent-research-workbench/releases/latest/download/MiracleHarness2.zip" data-i18n="hero.cta1">下载 Windows 版 ZIP</a>
             <a class="btn btn-ghost" href="https://github.com/tmdysx/agent-research-workbench" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta2">GitHub 仓库</a>
             <a class="btn btn-ghost" href="https://github.com/tmdysx/agent-research-workbench/blob/main/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta3">使用说明</a>
+            <a class="btn btn-ghost btn-film" href="#film" data-i18n="hero.film">▶ 30 秒宣传片</a>
           </div>
           <div class="hero-badges">
             <span class="chip chip-alpha" data-i18n="hero.badge1">MiracleHarness2 · 2026-10-07</span>
@@ -82,6 +84,42 @@
       <article><b data-i18n="fact3.title">自带 Agent</b><span data-i18n="fact3.desc">任何能读文件的 agent 都能照 AGENTS.md 干活，账号和费用自理。</span></article>
       <article><b data-i18n="fact4.title">73 个 MCP 工具</b><span data-i18n="fact4.desc">可选的本地 research-console 服务：报到、领活、交付、存档、向人提问。</span></article>
       <article><b data-i18n="fact5.title">9 个中文科研技能</b><span data-i18n="fact5.desc">1 个路线入口加 8 个阶段技能，配各模块的方法卡。</span></article>
+    </section>
+
+    <section class="section film-section" id="film" aria-labelledby="film-title">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="film.eyebrow">FILM</span>
+        <h2 id="film-title" data-i18n="film.title">30 秒看懂 MiracleHarness</h2>
+        <p class="section-lead" data-i18n="film.lead">从越做越乱的项目，到人定方向、agent 做事、换 agent 也接得上。宣传片有声音，点开再播放。</p>
+      </div>
+      <div class="film-frame">
+        <video class="film-video" controls preload="metadata" playsinline width="1280" height="720" poster="assets/video/miracleharness-30s-poster.webp" aria-label="MiracleHarness 30 秒宣传片" data-i18n-aria="aria.film">
+          <source src="assets/video/miracleharness-30s.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="why" aria-labelledby="why-title">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="why.eyebrow">WHY</span>
+        <h2 id="why-title" data-i18n="why.title">为什么做这个</h2>
+        <p class="section-lead" data-i18n="why.lead">我用过很多款 agent，从国内的 WorkBuddy 到国外的 Claude，但它们始终有几个缺点解决不了。这个本地单机的 agent 平台，就是冲着这七件事做的。</p>
+      </div>
+      <div class="why-layout">
+        <ol class="why-list">
+          <li class="why-item"><span class="why-num" aria-hidden="true">1</span><div><h3 data-i18n="why1.title">长程任务的维护和治理</h3><p data-i18n="why1.desc">agent 做的东西越来越多，文件越堆越乱：刚开始跑得很快，后期难以维护，人看不懂，最强的 agent 也会被过多无关和过时的文件带偏、产生幻觉，项目原地打转。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">2</span><div><h3 data-i18n="why2.title">多 agent 协作和交接</h3><p data-i18n="why2.desc">一个 agent 的 token 额度有限，换另一个 agent 接着推进时，会话很难跨 agent 传递，交接困难。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">3</span><div><h3 data-i18n="why3.title">业务一体化</h3><p data-i18n="why3.desc">写论文、做游戏、剪视频，都要在大量应用之间来回切换。一站式工作台把一个业务从头到尾装进一个文件夹分区管理，按业务装上对应的插件和文档。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">4</span><div><h3 data-i18n="why4.title">看得见 agent 做了什么</h3><p data-i18n="why4.desc">agent 改了哪些代码、文件放在哪里，常常说不清。可视化和日志系统让人能方便地参与和跟进进展。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">5</span><div><h3 data-i18n="why5.title">个性化</h3><p data-i18n="why5.desc">不同业务需要的东西不一样，平台让 agent 按你的需求安装插件、开发专属模块。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">6</span><div><h3 data-i18n="why6.title">提示词难写</h3><p data-i18n="why6.desc">精准的提示词能大大提高 agent 的准确率。笔记系统可以在不同模块和文件之间切换，随手记下需要改正的地方。</p></div></li>
+          <li class="why-item"><span class="why-num" aria-hidden="true">7</span><div><h3 data-i18n="why7.title">工作流复用</h3><p data-i18n="why7.desc">一个业务的完整流程很难复制和移植，市面上只有零散的小技能，还没有整套工作流复用的先例。</p></div></li>
+        </ol>
+        <figure class="why-shot">
+          <a href="assets/screens/why-sticky-note.webp" target="_blank" rel="noopener"><img src="assets/screens/why-sticky-note.webp" width="1600" height="804" loading="lazy" decoding="async" alt="作者在工作台里写下的便签：做这个平台的七个初衷（真实界面截图）" data-i18n-alt="alt.why" /></a>
+          <figcaption data-i18n="why.caption">作者在工作台里写下的便签原文（真实界面截图，点开看大图）</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="section" id="features" aria-labelledby="features-title">

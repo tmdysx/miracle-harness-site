@@ -23,7 +23,9 @@ miracle-harness-site/
 ├── app.js                      # I18N 字典、留言板与显式 Turnstile
 ├── assets/
 │   ├── brand/                  # 凤凰标志小图（favicon/logo）与 Open Graph 封面
-│   └── concepts/               # 由产品仓库 品牌/ 转换的 WebP 概念插画（AI 生成，非界面截图）
+│   ├── concepts/               # 由产品仓库 品牌/ 转换的 WebP 概念插画（AI 生成，非界面截图）
+│   ├── screens/                # 真实界面截图（如作者写「为什么做这个」的便签）
+│   └── video/                  # 30 秒宣传片（720p H.264，点开再播放）与封面
 ├── src/index.ts                # Worker、API、安全头、canonical 与旧页面重定向
 ├── migrations/0001_guestbook.sql
 ├── archive/v1/                 # 第一版官网（2026-08）原样存档，发布到 /v1/
