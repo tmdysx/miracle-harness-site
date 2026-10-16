@@ -229,6 +229,24 @@ test("the why section lists the seven reasons next to the real note", async () =
   assert.match(html, /<a href="#why" data-i18n="nav\.why">/u);
 });
 
+test("the community section shows the QQ group QR code and a tap-to-join link", async () => {
+  const html = await readFile(new URL("index.html", root), "utf8");
+  const section = html.match(/<section class="section" id="community"[\s\S]*?<\/section>/u)?.[0];
+  assert.ok(section, "community section is missing");
+  assert.match(
+    section,
+    /<img src="assets\/community\/qq-group-qr\.webp" width="497" height="626" loading="lazy" decoding="async" alt="[^"]*群号 827537553"/u,
+  );
+  await stat(new URL("assets/community/qq-group-qr.webp", root));
+  assert.match(section, /<b>827537553<\/b>/u);
+  assert.match(
+    section,
+    /<a class="btn btn-primary" href="https:\/\/qm\.qq\.com\/q\/ivHMESUKb" target="_blank" rel="noopener noreferrer"/u,
+  );
+  assert.match(html, /<nav class="main-nav"[\s\S]*?<a href="#community" data-i18n="nav\.community">[\s\S]*?<\/nav>/u);
+  assert.match(html, /<footer class="site-footer">[\s\S]*?<a class="contact-v" href="#community">827537553<\/a>/u);
+});
+
 async function archivePages(directory = new URL("archive/v1/", root)) {
   const pages = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {

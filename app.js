@@ -11,6 +11,7 @@ const I18N = {
     "nav.workflow": "科研流程",
     "nav.agents": "接入 Agent",
     "nav.status": "当前状态",
+    "nav.community": "社群",
     "nav.license": "许可",
     "nav.guestbook": "留言",
     "nav.github": "GitHub",
@@ -266,7 +267,17 @@ const I18N = {
     "footer.v1": "第一版官网",
     "footer.contact": "联系我",
     "footer.email": "邮箱",
-    "footer.wechat": "微信"
+    "footer.wechat": "微信",
+    "footer.qqGroup": "QQ 群",
+    "community.eyebrow": "COMMUNITY",
+    "community.title": "加入「半自动科研群」",
+    "community.lead": "还是早期版本，最需要真实用过的人来提意见。用 agent 做科研、做长程项目的朋友，欢迎进 QQ 群交流：用的时候卡在哪、最想要什么功能、新版本什么时候发，都可以在群里聊。",
+    "community.numberLabel": "QQ 群号",
+    "community.join": "手机上点这里加群",
+    "community.guestbook": "不用 QQ？去留言",
+    "community.note": "在电脑上看的话，用手机 QQ 扫一扫二维码，或在 QQ 里搜索群号加入。",
+    "community.caption": "QQ 扫一扫，加入群聊",
+    "alt.community": "「半自动科研群」QQ 群二维码，群号 827537553"
   },
 
   en: {
@@ -279,6 +290,7 @@ const I18N = {
     "nav.workflow": "Research route",
     "nav.agents": "Agents",
     "nav.status": "Status",
+    "nav.community": "Community",
     "nav.license": "License",
     "nav.guestbook": "Guestbook",
     "nav.github": "GitHub",
@@ -534,7 +546,17 @@ const I18N = {
     "footer.v1": "First website",
     "footer.contact": "Contact",
     "footer.email": "Email",
-    "footer.wechat": "WeChat"
+    "footer.wechat": "WeChat",
+    "footer.qqGroup": "QQ group",
+    "community.eyebrow": "COMMUNITY",
+    "community.title": "Join the community group",
+    "community.lead": "This is still an early release, and feedback from people who actually use it matters most. If you use agents for research or long-running projects, come and talk in our QQ group (半自动科研群, \"semi-automated research\"): where you got stuck, what you want next, and when new versions ship. The group chats in Chinese.",
+    "community.numberLabel": "QQ group number",
+    "community.join": "Join in QQ on your phone",
+    "community.guestbook": "No QQ? Leave a message",
+    "community.note": "On a computer? Scan the QR code with QQ on your phone, or search for the group number in QQ.",
+    "community.caption": "Scan with QQ to join",
+    "alt.community": "QR code for the QQ group 半自动科研群 (semi-automated research), group number 827537553"
   }
 };
 

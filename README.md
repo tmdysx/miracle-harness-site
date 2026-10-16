@@ -23,6 +23,7 @@ miracle-harness-site/
 ├── app.js                      # I18N 字典、留言板与显式 Turnstile
 ├── assets/
 │   ├── brand/                  # 凤凰标志小图（favicon/logo）与 Open Graph 封面
+│   ├── community/              # 「半自动科研群」QQ 群二维码（无损 WebP）
 │   ├── concepts/               # 由产品仓库 品牌/ 转换的 WebP 概念插画（AI 生成，非界面截图）
 │   ├── screens/                # 真实界面截图（如作者写「为什么做这个」的便签）
 │   └── video/                  # 30 秒宣传片（720p H.264，点开再播放）与封面
