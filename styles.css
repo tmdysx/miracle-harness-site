@@ -308,6 +308,18 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .license-links a:hover { border-color: var(--jade-soft); color: var(--jade); }
 .license-site { max-width: 760px; margin: 18px auto 0; color: #7d8c9b; text-align: center; font-size: 12px; line-height: 1.7; }
 
+/* Community */
+.community-panel { max-width: 1020px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 44px; align-items: center; padding: 36px 40px; border: 1px solid rgba(31, 106, 88, .2); border-radius: 24px; background: radial-gradient(520px 230px at 0 0, rgba(142, 198, 188, .22), transparent 65%), #fff; box-shadow: var(--shadow); }
+.community-copy { min-width: 0; }
+.community-copy h2 { margin: 10px 0 12px; color: var(--ink); font-size: clamp(24px, 2.8vw, 32px); line-height: 1.3; letter-spacing: -.02em; }
+.community-number { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+.community-number b { color: var(--jade); font-size: 24px; font-weight: 850; letter-spacing: .04em; font-variant-numeric: tabular-nums; user-select: all; }
+.community-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.community-note { margin: 14px 0 0; color: #7d8c9b; font-size: 12px; line-height: 1.6; }
+.community-qr { margin: 0; text-align: center; }
+.community-qr img { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; border-radius: 22px; box-shadow: var(--shadow-soft); }
+.community-qr figcaption { margin-top: 10px; color: #7d8c9b; font-size: 12px; }
+
 /* Guestbook */
 .guestbook-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 19px; align-items: start; }
 .guestbook-form, .guestbook-feed { min-width: 0; padding: 25px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow-soft); }
@@ -354,6 +366,7 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .contact-heading { color: #fff; font-size: 12.5px; letter-spacing: .08em; }
 .contact-row { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .contact-item { display: grid; grid-template-columns: 42px 1fr; gap: 10px; }
+html[lang="en"] .contact-item { grid-template-columns: 62px 1fr; }
 .contact-k { color: #86a69c; font-size: 11px; letter-spacing: .08em; }
 .contact-v { color: #d8e7e2; font-size: 12.5px; overflow-wrap: anywhere; }
 .contact-item a.contact-v { color: #a6e0cc; text-decoration: none; }
@@ -373,6 +386,7 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
   .stage:nth-child(4n)::after { content: "→"; }
   .stage:nth-child(3n)::after, .stage:last-child::after { content: none; }
   .download-panel, .guestbook-layout { grid-template-columns: 1fr; }
+  .community-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 240px); gap: 28px; }
   .download-panel .start-steps { padding-top: 23px; border-top: 1px solid var(--line); border-left: 0; }
   .hero-copy { width: min(620px, 72%); }
   .footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 36px; }
@@ -411,6 +425,9 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
   .stage::after, .stage:nth-child(n)::after { content: none; }
   .feature-card, .agent-card, .license-card { padding: 18px; }
   .download-panel, .guestbook-form, .guestbook-feed { padding: 20px; }
+  .community-panel { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+  .community-actions .btn { width: 100%; }
+  .community-qr img { max-width: 240px; }
   .download-main h3 { font-size: 22px; }
   .download-actions .btn { width: 100%; }
   .start-steps { padding-left: 34px; }
