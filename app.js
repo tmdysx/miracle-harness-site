@@ -577,6 +577,21 @@ const I18N = {
     return "zh";
   }
 
+  // The header links must never run under the buttons or squeeze the brand.
+  // Their width depends on the language and on which font the system has, so
+  // measure instead of trusting a breakpoint; when they don't fit, styles.css
+  // hides them as it does below 1080px.
+  function fitHeaderNav() {
+    var header = document.querySelector(".site-header");
+    var nav = header && header.querySelector(".main-nav");
+    if (!nav) return;
+    header.classList.remove("nav-overflow");
+    if (window.getComputedStyle(nav).display === "none") return;
+    var brand = header.querySelector(".brand-name");
+    var tight = nav.scrollWidth > nav.clientWidth + 1 || (brand && brand.scrollWidth > brand.clientWidth + 1);
+    if (tight) header.classList.add("nav-overflow");
+  }
+
   function apply(lang) {
     var dict = I18N[lang] || I18N.zh;
     var els = document.querySelectorAll("[data-i18n]");
@@ -600,6 +615,7 @@ const I18N = {
       if (lkey && dict[lkey] !== undefined) labels[l].setAttribute("aria-label", dict[lkey]);
     }
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    fitHeaderNav();
     var toggle = document.getElementById("lang-toggle");
     if (toggle) toggle.textContent = lang === "zh" ? "EN" : "中文";
     try { localStorage.setItem(LS_KEY, lang); } catch (e) { /* ignore */ }
@@ -893,5 +909,15 @@ const I18N = {
   }
 
   apply(currentLang());
+  var fitQueued = false;
+  window.addEventListener("resize", function () {
+    if (fitQueued) return;
+    fitQueued = true;
+    window.requestAnimationFrame(function () {
+      fitQueued = false;
+      fitHeaderNav();
+    });
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeaderNav);
   initializeGuestbook();
 })();

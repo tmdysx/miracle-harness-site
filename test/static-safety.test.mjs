@@ -247,6 +247,18 @@ test("the community section shows the QQ group QR code and a tap-to-join link", 
   assert.match(html, /<footer class="site-footer">[\s\S]*?<a class="contact-v" href="#community">827537553<\/a>/u);
 });
 
+test("the header links never overlap the buttons, in either language", async () => {
+  const css = await readFile(new URL("styles.css", root), "utf8");
+  const script = await readFile(new URL("app.js", root), "utf8");
+  // The English labels are longer; the community link stays out of the English header.
+  assert.match(css, /html\[lang="en"\] \.main-nav a\[href="#community"\] \{ display: none; \}/u);
+  // When the links still don't fit (system fonts differ), app.js hides them like the narrow layout does.
+  assert.match(css, /\.site-header\.nav-overflow \.main-nav \{ display: none; \}/u);
+  assert.match(script, /function fitHeaderNav\(\)[\s\S]*?nav\.scrollWidth > nav\.clientWidth/u);
+  assert.match(script, /document\.documentElement\.lang = [^;]+;\s*fitHeaderNav\(\);/u);
+  assert.match(script, /window\.addEventListener\("resize"/u);
+});
+
 async function archivePages(directory = new URL("archive/v1/", root)) {
   const pages = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {

@@ -79,6 +79,11 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .main-nav { display: flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0; white-space: nowrap; }
 .main-nav a { padding: 8px 11px; border-radius: 9px; color: #5d6a78; text-decoration: none; font-size: 13.5px; }
 .main-nav a:hover { color: var(--jade); background: var(--jade-pale); }
+/* English labels are longer, and the QQ group chats in Chinese: the English header leaves it to the section and the footer. */
+html[lang="en"] .main-nav a[href="#community"] { display: none; }
+/* app.js sets .nav-overflow when the links don't fit (widths depend on the system font); the header then looks as it does below 1080px. */
+.site-header.nav-overflow .main-nav { display: none; }
+.site-header.nav-overflow .header-actions { margin-left: auto; }
 .header-actions { display: flex; align-items: center; gap: 9px; flex: 0 0 auto; white-space: nowrap; }
 .header-github { color: #55657a; text-decoration: none; font-size: 13px; font-weight: 700; }
 .header-github:hover { color: var(--jade); }
@@ -315,10 +320,10 @@ code, pre { font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;
 .community-number { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 18px 0 0; color: var(--muted); font-size: 13px; }
 .community-number b { color: var(--jade); font-size: 24px; font-weight: 850; letter-spacing: .04em; font-variant-numeric: tabular-nums; user-select: all; }
 .community-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-.community-note { margin: 14px 0 0; color: #7d8c9b; font-size: 12px; line-height: 1.6; }
+.community-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .community-qr { margin: 0; text-align: center; }
 .community-qr img { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; border-radius: 22px; box-shadow: var(--shadow-soft); }
-.community-qr figcaption { margin-top: 10px; color: #7d8c9b; font-size: 12px; }
+.community-qr figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
 
 /* Guestbook */
 .guestbook-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 19px; align-items: start; }
